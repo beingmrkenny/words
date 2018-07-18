@@ -1,0 +1,62 @@
+main {
+	display: flex;
+	flex-flow: row nowrap;
+	overflow-x: scroll;
+}
+
+word-list {
+	display: flex;
+	flex-direction: column;
+	min-width: 200px;
+	max-height: 100%;
+	overflow: hidden;
+	padding: 0 20px;
+
+	list-header {
+		display: flex;
+		flex-flow: row wrap;
+		flex: 0 0 auto;
+	}
+
+	ul {
+		position: relative;
+		flex: 1 1 auto;
+		overflow-y: scroll;
+	}
+
+	list-header {
+
+		h2 {
+			margin-top: 0;
+			margin-bottom: 15px;
+
+			white-space: nowrap;
+		}
+
+		tool-bar {
+			display: flex;
+			display: none; // just for the minute
+			flex-wrap: nowrap;
+		}
+	}
+
+	ul,
+	li {
+		margin: 0;
+		padding: 0;
+
+		list-style: none;
+	}
+
+	li {
+		height: 30px;
+	}
+
+	li tool-bar {
+		display: none;
+	}
+
+	li:hover tool-bar {
+		display: inline;
+	}
+}

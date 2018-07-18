@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Words</title>
+	<base href="/">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="/wirts/favicon.ico">
+	<link rel="stylesheet" href="/wirts/wirts.css?refresh=yesplease">
+</head>
+
+<body>
+
+	<header>
+
+		<h1>Words</h1>
+
+		<add-word>
+			<!-- Take a comma separated list and do a new word for each -->
+			<input type="text" name="wirt" size="30">
+			<button>+</button>
+		</add-word>
+
+		<!-- only appears when a wirts is checked -->
+		<checked-word-tools>
+			Checked words: <button>⭐️</button> <button>🏷</button> <button>🗑</button>
+		</checked-word-tools>
+
+	</header>
+
+	<main>
+
+	</main>
+
+	<template id="WordList">
+		<word-list>
+			<list-header>
+				<h2>{{group.tag}}</h2>
+				<tool-bar>
+					<button>🔠</button>
+					<button>🔢</button>
+					<button>🔀</button>
+					<button>✏️</button>
+				</tool-bar>
+			</list-header>
+			<ul>
+				<!-- words -->
+			</ul>
+		</word-list>
+	</template>
+
+	<template id="Word">
+		<!-- if it's fave class it, and apply the star on the before -->
+		<li>
+			{{word}}
+			<!-- 🕸 / 🕷 use a spider on a web instead of a checkbox-->
+			<tool-bar>
+				<button>⭐️</button>
+				<button>🏷</button>
+				<button>⬆</button> <button>⬇</button>
+				<button>🗑</button>
+			</tool-bar>
+		</li>
+	</template>
+
+	<template id="TagDialog">
+		<dialog>
+			<ul>
+				<li class="applied">🏷 {{tag}}</li> <!-- show emoji if tagged, or something like that -->
+			</ul>
+		</dialog>
+	</template>
+
+	<script type="text/javascript" src="/wirts/js.js?refresh=yesplease"></script>
+
+</body>
+
+</html>

@@ -8,3 +8,12 @@ A little web app to keep track of your favourite words
 3. to view the database, run `sqlite3 wirts.db` - once you have access you should run `PRAGMA foreign_keys = ON;`
 
 To delete everything from the database, run `sqlite3 wirts.db < delet.sql`
+
+## config.json
+
+	{
+		"wirtsDir" : "/Path/to/wirts",
+		"refreshOnWatch" : true,
+		"scssCompressionStyle" : "expanded",
+		"googleCompiler" : "/Path/to/closure-compiler.jar"
+	}

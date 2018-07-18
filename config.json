@@ -1,0 +1,6 @@
+{
+	"wirtsDir" : "/Users/mkenny/crarp/wirts",
+	"refreshOnWatch" : true,
+	"scssCompressionStyle" : "expanded",
+	"googleCompiler" : "/Users/mkenny/config/closure-compiler.jar"
+}

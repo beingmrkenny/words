@@ -144,15 +144,11 @@
 
 			// Perform the query via std mysql_query function..
 			$this->result = $this->dbh->query($query);
-			if ($this->result === false) {
-				_bt();
-			}
 			$this->count(true, true);
 
 			// If there is an error then take note of it..
 			if (@$this->dbh->lastErrorCode())
 			{
-				_bt();
 				$err_str = $this->dbh->lastErrorMsg();
 				$this->register_error($err_str);
 				$this->show_errors ? trigger_error($err_str,E_USER_WARNING) : null;

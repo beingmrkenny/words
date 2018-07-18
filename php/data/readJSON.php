@@ -1,6 +1,4 @@
 <?php
-
-require_once '../common.inc';
 require_once 'db/connect.inc';
 require_once 'db/write.inc';
 

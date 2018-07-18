@@ -1,7 +1,21 @@
 <?php
-
-require_once '../common.inc';
 require_once 'db/connect.inc';
+
+function getTags() {
+	global $db;
+	return $db->get_col("SELECT tag FROM tags");
+}
+
+function getWordsForTag ($tag) {
+	global $db;
+	$tag = escape($tag);
+	return $db->get_col("SELECT word FROM words JOIN word2tag USING (word) WHERE tag = '$tag'");
+}
+
+function getUntaggedWords () {
+	global $db;
+	return $db->get_col("SELECT word FROM words LEFT JOIN word2tag USING (word) WHERE word2tag.word IS NULL");
+}
 
 function getWordScore ($word) {
 	global $db;

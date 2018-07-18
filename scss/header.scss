@@ -1,0 +1,42 @@
+h1 {
+	margin: 0 0 10px 0;
+}
+
+header {
+	display: flex;
+	flex-direction: column;
+
+	tool-bar {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+}
+
+add-word {
+	width: 100%;
+
+	input,
+	button {
+		vertical-align: bottom;
+	}
+
+	input {
+		width: calc( 100% - 71px );
+	}
+
+	button {
+		display: inline-flex;
+		justify-content: center;
+		align-items: baseline;
+		width: 30px;
+
+		line-height: 17px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+}
+
+checked-word-tools {
+	display: none;
+}

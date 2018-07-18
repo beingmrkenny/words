@@ -1,0 +1,49 @@
+<!-- farted -->
+<!-- <tool-bar id="Header">
+
+	<add-word>
+		<input type="text" name="wirt" size="30">
+		<button>+</button>
+	</add-word>
+
+	<!- - only appears when a wirts is checked - ->
+	<checked-word-tools>
+		Checked words: <button>⭐️</button> <button>🏷</button> <button>🗑</button>
+	</checked-word-tools>
+
+</tool-bar> -->
+
+<section>
+
+	<word-list data-tag="{{tag}}">
+
+		<list-header>
+			<h2>{{tag}}</h2>
+			<tool-bar>
+				<button>🔠</button> <button>🔀</button> <button>✏️</button>
+			</tool-bar>
+		</list-header>
+
+		<ul>
+			<!-- if it's fave class it, and apply the star on the before -->
+			<li data-wirt="{{word}}">
+				{{word}}
+				<!-- 🕸 / 🕷 use a spider on a web instead of a checkbox-->
+				<tool-bar>
+					<button>⭐️</button>
+					<button>🏷</button>
+					<button>⬆</button> <button>⬇</button>
+					<button>🗑</button>
+				</tool-bar>
+			</li>
+		</ul>
+
+	</word-list>
+
+</section>
+
+<dialog id="Tags">
+	<ul>
+		<li class="applied">🏷 {{tag}}</li> <!-- show emoji if tagged, or something like that -->
+	</ul>
+</dialog>

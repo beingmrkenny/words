@@ -1,11 +1,7 @@
 <?php
-
-// NB to be run from command line
-
-require_once '../common.inc';
 require_once 'write.inc';
 
-$csvFiles = glob('../shreds/csv/*.csv');
+$csvFiles = glob('../../snippets/csv/*.csv');
 
 foreach ($csvFiles as $csvFile) {
 
@@ -36,21 +32,3 @@ foreach ($csvFiles as $csvFile) {
 	}
 
 }
-
-
-/*
-	array(
-		tagName = tagName,
-		words = []
-	)
-*/
-
-
-
-// read csv into array
-// get tag name (file name?)
-// create tag name if not exists
-// get words
-// lowercase all words unless they shouldnt be ("African")
-// insert words (one feckin insert query)
-// associate all words with tag (one feckin insert query)

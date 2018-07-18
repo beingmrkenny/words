@@ -1,6 +1,4 @@
 <?php
-
-require_once '../common.inc';
 require_once 'db/connect.inc';
 require_once 'read.inc';
 
@@ -10,11 +8,9 @@ function addWord ($word) {
 }
 
 function addWords ($words) {
-	foreach ($words as &$word) {
-		$word = "('{escape($word)}', 0, 0)";
+	foreach ($words as $word) {
+		addWord($word);
 	}
-	$wordsJoined = implode($words, ',');
-	query("INSERT INTO words (word, fave, score) VALUES $wordsJoined");
 }
 
 function tagWord ($tag, $word) {
@@ -25,11 +21,9 @@ function tagWord ($tag, $word) {
 
 function tagWords ($tag, $words) {
 	$tag = escape($tag);
-	foreach ($words as &$word) {
-		$word = "('{escape($word)}', '$tag')";
+	foreach ($words as $word) {
+		tagWord($tag, $word);
 	}
-	$wordsTagsJoined = implode($words, ',');
-	query("INSERT INTO word2tag (word, tag) VALUES $wordsTagsJoined");
 }
 
 function detagWord ($tag, $word) {

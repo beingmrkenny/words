@@ -1,0 +1,15 @@
+*.db
+*.scpt
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+/serve
+
+# misc
+/.sass-cache
+
+# System Files
+.DS_Store
+Thumbs.db

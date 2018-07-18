@@ -1,3 +1,5 @@
+PRAGMA foreign_keys = ON;
+
 insert into words (word, fave, score) values
     ('word', 0, 0),
     ('dsfsdfgsdfg', 0, 0),
