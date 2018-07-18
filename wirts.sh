@@ -7,7 +7,7 @@ googleCompiler=$(jq -r .googleCompiler $DIR/config.json);
 
 wirtswatch () {
 	cd $wirtsDir;
-	wirtscompile && fswatch -0xvo -l 1 "$wirtsDir" -e '\/serve' -e '\.git' -e '\.scpt' -e '\.sh' | xargs -0 -n1 -I {} $wirtsDir/watchhandler.sh {};
+	wirtscompile && fswatch -0xvo -l 1 "$wirtsDir" -e '\.db' -e '\/serve' -e '\.git' -e '\.scpt' -e '\.sh' | xargs -0 -n1 -I {} $wirtsDir/watchhandler.sh {};
 }
 
 wirtsrelease () {
@@ -36,7 +36,9 @@ wirtscompile () {
 	local refreshString='refresh='$(date +"%s");
 	sed -i '' -e "s/refresh=yesplease/$refreshString/" $wirtsDir/serve/index.html;
 
-	cp -r $wirtsDir/php/data $wirtsDir/serve/data;
+	if [[ ! -f $wirtsDir/php/data ]]; then
+		ln -s $wirtsDir/php/data $wirtsDir/serve/data;
+	fi
 }
 
 wirtscss () {

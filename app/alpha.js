@@ -15,7 +15,67 @@ document.addEventListener('DOMContentLoaded', function () {
 	xhr.open("GET", "/wirts/data/ghent.php");
 	xhr.send();
 
+	q('add-word button').addEventListener ('click', saveWirts);
+
+	q('add-word input').addEventListener ('keypress', function (ev) {
+		if (ev.key == 'Enter') {
+			saveWirts();
+		}
+	});
+
 });
+
+// TODO need a sort word list thing
+
+function saveWirts () {
+
+	q('add-word button').disabled = true;
+
+	var wirts = q('add-word input').value;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/wirts/data/shayve.php", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.addEventListener("readystatechange", function() {
+
+		if (this.status == 200) {
+
+			q('add-word button').disabled = false;
+
+			if (this.readyState == XMLHttpRequest.DONE) {
+
+				let inbox = q('word-list');
+				if (!inbox.querySelector('list-header h2').textContent == 'INBOX') {
+					inbox = getTemplate('WordList');
+					wordList.querySelector('h2').textContent = 'INBOX';
+				}
+
+				let words = wirts.split(/[ ,]+/);
+				let wordListList = inbox.querySelector('ul');
+				for (let wirt of words) {
+					wordListList.appendChild(createWord(wirt));
+				}
+
+				// FIXME scrolling is fewked - scrolling aint dont work for new pieces of shit
+				// TODO scroll to the bastard
+				// TODO highlight the new elements
+
+				q('add-word input').value = '';
+
+		    }
+
+		}
+
+	});
+	xhr.send(`wirts=${wirts}`);
+
+}
+
+function createWord (wirt) {
+	let word = getTemplate('Word');
+	word.insertBefore(document.createTextNode(wirt), word.firstElementChild);
+	return word;
+}
 
 function displayWirts (wirts) {
 
@@ -53,8 +113,8 @@ function displayWirts (wirts) {
 			wordList.querySelector('h2').textContent = tag.tag.toLowerCase();
 		}
 
-		for (let word of tag.words) {
-			wordListList.appendChild(createElement(`<li>${word}</li>`));
+		for (let wirt of tag.words) {
+			wordListList.appendChild(createWord(wirt));
 		}
 
 		if (tag.tag === null && main.firstElementChild) {

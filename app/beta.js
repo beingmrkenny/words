@@ -1,5 +1,17 @@
+function qid (id) {
+	return document.getElementById(id);
+}
+
+function q (selector) {
+	return document.querySelector(selector);
+}
+
+function qq (selector) {
+	return document.querySelectorAll(selector);
+}
+
 function getTemplate(id) {
-	var templateContent = document.importNode(document.getElementById(id).content, true);
+	var templateContent = document.importNode(qid(id).content, true);
 	return templateContent.firstElementChild;
 }
 

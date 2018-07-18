@@ -17,8 +17,7 @@
 		<h1>Words</h1>
 
 		<add-word>
-			<!-- Take a comma separated list and do a new word for each -->
-			<input type="text" name="wirt" size="30">
+			<input type="text" name="wirts" size="30">
 			<button>+</button>
 		</add-word>
 
@@ -36,7 +35,7 @@
 	<template id="WordList">
 		<word-list>
 			<list-header>
-				<h2>{{group.tag}}</h2>
+				<h2></h2>
 				<tool-bar>
 					<button>🔠</button>
 					<button>🔢</button>
@@ -53,7 +52,6 @@
 	<template id="Word">
 		<!-- if it's fave class it, and apply the star on the before -->
 		<li>
-			{{word}}
 			<!-- 🕸 / 🕷 use a spider on a web instead of a checkbox-->
 			<tool-bar>
 				<button>⭐️</button>
