@@ -3,7 +3,6 @@ PRAGMA foreign_keys = ON;
 create table words (
     word text primary key not null,
     fave integer default 0,
-    score integer default 0,
 	unique(word)
 );
 
@@ -11,6 +10,10 @@ create table tags (
     tag text primary key not null,
     jealous integer default 0
 );
+
+-- create table tags (
+--     tag text primary key not null
+-- );
 
 create table word2tag (
     word text not null,
@@ -28,8 +31,8 @@ when (select jealous from tags where tag = NEW.tag) = 1
 begin
 	delete from word2tag where word = NEW.word;
 end;
-
--- if word is tagged with a jealous tag, and the new tag is not jealous, do not tag this word
+--
+-- -- if word is tagged with a jealous tag, and the new tag is not jealous, do not tag this word
 create trigger jealousTagsPrevent
 before insert on word2tag
 for each row

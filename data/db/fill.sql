@@ -1,19 +1,19 @@
 PRAGMA foreign_keys = ON;
 
-insert into words (word, fave, score) values
-    ('word', 0, 0),
-    ('dsfsdfgsdfg', 0, 0),
-    ('sdfgwt', 0, 0),
-    ('fdgsdfg', 0, 0),
-    ('sdfgsdfg', 0, 0),
-    ('gsfdgsdfg', 0, 0),
-    ('rtuyrtyurtyu', 0, 0),
-    ('wertwertwert', 0, 0),
-    ('fghjfghjfghj', 0, 0),
-    ('qwetwertwertw', 0, 0),
-    ('ertyerty', 0, 0),
-    ('ertyertyerty', 0, 0),
-    ('gsgsdfg', 0, 0);
+insert into words (word, fave) values
+    ('word', 0),
+    ('dsfsdfgsdfg', 0),
+    ('sdfgwt', 0),
+    ('fdgsdfg', 0),
+    ('sdfgsdfg', 0),
+    ('gsfdgsdfg', 0),
+    ('rtuyrtyurtyu', 0),
+    ('wertwertwert', 0),
+    ('fghjfghjfghj', 0),
+    ('qwetwertwertw', 0),
+    ('ertyerty', 0),
+    ('ertyertyerty', 0),
+    ('gsgsdfg', 0);
 
 insert into tags (tag, jealous) values
     ('tag one', 0),

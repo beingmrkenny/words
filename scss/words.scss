@@ -1,0 +1,120 @@
+main {
+	display: flex;
+	flex-flow: row nowrap;
+
+	overflow-x: scroll;
+}
+
+word-list {
+	display: flex;
+	flex-direction: column;
+
+	min-width: 200px;
+	max-height: 100%;
+	overflow-x: hidden;
+	padding: 0 20px;
+
+	.list-header {
+		display: flex;
+		flex: 0 0 auto;
+		flex-flow: row wrap;
+		overflow: hidden;
+	}
+
+	ul {
+		position: relative;
+		flex: 1 1 auto;
+
+		overflow-y: scroll;
+	}
+
+	.list-header {
+		h2 {
+			margin-top: 0;
+			margin-bottom: 15px;
+
+			white-space: nowrap;
+
+			cursor: pointer;
+		}
+
+		tool-bar {
+			display: none;
+			flex-wrap: nowrap;
+
+			margin-bottom: 15px;
+		}
+
+		&.active {
+			tool-bar {
+				display: flex;
+			}
+		}
+	}
+
+	ul,
+	li {
+		margin: 0;
+		padding: 0;
+
+		list-style: none;
+	}
+
+	li {
+		min-height: 1.6em;
+
+		line-height: 1.6em;
+
+		&[data-fave="1"] {
+			color: $yellow;
+			the-word::before {
+				margin-right: 5px;
+
+				content: "⭐️";
+			}
+		}
+
+		&.checked,
+		&.active {
+			user-select: none;
+		}
+
+		&.checked::before {
+			content: attr(data-hand);
+		}
+	}
+
+	li tool-bar {
+		display: none;
+		button {
+			margin: 0 5px 5px 0;
+		}
+	}
+
+	li.active tool-bar {
+		display: block;
+	}
+}
+
+the-word {
+	cursor: pointer;
+
+	transition: background-color 0.15s, color 0.15s;
+
+	.checked &,
+	&.new {
+		padding: 2px 5px 1px;
+
+		color: $dark;
+		background: $yellow;
+		border-radius: 3px;
+	}
+
+	&.deja-la {
+		padding: 2px 5px 1px;
+
+		color: $light;
+		background: $red;
+		border-radius: 3px;
+	}
+}

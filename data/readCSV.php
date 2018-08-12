@@ -1,7 +1,7 @@
 <?php
 require_once 'write.inc';
 
-$csvFiles = glob('../../snippets/csv/*.csv');
+$csvFiles = glob('../snippets/csv/*.csv');
 
 foreach ($csvFiles as $csvFile) {
 
@@ -28,7 +28,7 @@ foreach ($csvFiles as $csvFile) {
 	addWords($words);
 	if ($tag) {
 		addTag($tag);
-		tagWords($tag, $words);
+		tagWords([$tag], $words);
 	}
 
 }

@@ -1,5 +1,8 @@
+serve/
+
 *.db
 *.scpt
+*.map
 
 # compiled output
 /dist

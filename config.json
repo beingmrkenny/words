@@ -1,5 +1,5 @@
 {
-	"wirtsDir" : "/Users/mkenny/crarp/wirts",
+	"wordsDir" : "/Users/mkenny/crarp/words",
 	"refreshOnWatch" : true,
 	"scssCompressionStyle" : "expanded",
 	"googleCompiler" : "/Users/mkenny/config/closure-compiler.jar"

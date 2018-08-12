@@ -6,24 +6,24 @@
 	<title>Words</title>
 	<base href="/">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/x-icon" href="/wirts/favicon.ico">
-	<link rel="stylesheet" href="/wirts/wirts.css?refresh=yesplease">
+	<link rel="icon" type="image/x-icon" href="/words/favicon.ico">
+	<link rel="stylesheet" href="/words/words.css?refresh=yesplease">
 </head>
 
 <body>
 
-	<header>
+	<header class="main-header">
 
 		<h1>Words</h1>
+		<button>⭐️👀</button>
 
-		<add-word>
-			<input type="text" name="wirts" size="30">
+		<form id="AddWord">
+			<input type="text" name="words" size="30">
 			<button>+</button>
-		</add-word>
+		</form>
 
-		<!-- only appears when a wirts is checked -->
 		<checked-word-tools>
-			Checked words: <button>⭐️</button> <button>🏷</button> <button>🗑</button>
+			Checked words: <button>☝️</button> <button>⭐️</button> <button>🏷</button> <button>🗑</button>
 		</checked-word-tools>
 
 	</header>
@@ -34,15 +34,14 @@
 
 	<template id="WordList">
 		<word-list>
-			<list-header>
+			<header class="list-header">
 				<h2></h2>
 				<tool-bar>
 					<button>🔠</button>
-					<button>🔢</button>
 					<button>🔀</button>
 					<button>✏️</button>
 				</tool-bar>
-			</list-header>
+			</header>
 			<ul>
 				<!-- words -->
 			</ul>
@@ -50,27 +49,33 @@
 	</template>
 
 	<template id="Word">
-		<!-- if it's fave class it, and apply the star on the before -->
 		<li>
-			<!-- 🕸 / 🕷 use a spider on a web instead of a checkbox-->
+			<the-word></the-word>
 			<tool-bar>
 				<button>⭐️</button>
 				<button>🏷</button>
-				<button>⬆</button> <button>⬇</button>
 				<button>🗑</button>
 			</tool-bar>
 		</li>
 	</template>
 
-	<template id="TagDialog">
+	<template id="ListDialog">
 		<dialog>
 			<ul>
-				<li class="applied">🏷 {{tag}}</li> <!-- show emoji if tagged, or something like that -->
+				<li class="applied">🏷 </li> <!-- show emoji if tagged, or something like that -->
 			</ul>
 		</dialog>
 	</template>
 
-	<script type="text/javascript" src="/wirts/js.js?refresh=yesplease"></script>
+	<template id="DialogTemplate">
+		<dialog id="Dialog">
+			<p class="message"></p>
+			<button id="OK">OK</button>
+			<button id="Cancel">Cancel</button>
+		</dialog>
+	</template>
+
+	<script type="text/javascript" src="/words/js.js?refresh=yesplease"></script>
 
 </body>
 

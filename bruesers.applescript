@@ -4,7 +4,7 @@ on run argv
 
 		if it is running then
 
-			set windowList to every tab of every window whose URL starts with "http://localhost/wirts"
+			set windowList to every tab of every window whose URL starts with "http://localhost/words"
 
 			repeat with tabList in windowList
 				set tabList to tabList as any
