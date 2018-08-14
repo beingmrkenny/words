@@ -68,6 +68,25 @@ class WordList {
 	}
 
 	static edit (wordList) {
+		let tag = wordList.querySelector('h2').textContent.trim();
+		(new Dialog()).form(
+			'Edit tag',
+			'EditTagForm',
+			() => {
+				q('#Dialog input').value = tag;
+			},
+			() => {
+				eddyt('edit',
+					{ tag: tag, newTag: newTag },
+					() => {
+						// find correnct tag and fuck it
+					},
+					() => {
+						console.log('pistle :(');
+					}
+				);
+			}
+		);
 		// popup a form
 		// save that shit
 		// update the UI on success or just fuck off and die on failuere

@@ -14,11 +14,13 @@ class Dialog {
 		this.okCancel(ok);
 	}
 
-	form (message, formId, ok) {
+	form (message, formId, prepareForm, ok) {
 		this.dialog.replaceChild(
 			getTemplate(formId),
 			this.dialog.querySelector('content-placeholder')
 		);
+		this.dialog.querySelector('h3').textContent = message;
+		prepareForm();
 		this.okCancel(ok);
 	}
 

@@ -77,7 +77,12 @@ setTimeout(function () {
 					break;
 
 				case '✏️':
-					WordList.edit(this.closest('word-list'));
+					let word = this.closest('li');
+					if (word) {
+						Word.edit(this)
+					} else {
+						WordList.edit(this.closest('word-list'));
+					}
 					break;
 
 
@@ -123,6 +128,11 @@ function displayWords (words) {
 
 		if (tag.tag === null) {
 			h2.textContent = 'INBOX';
+			for (let button of qq('button', wordList)) {
+				if (button.textContent == '✏️') {
+					button.remove();
+				}
+			}
 		} else {
 			h2.textContent = tag.tag.toLowerCase();
 		}

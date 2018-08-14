@@ -91,15 +91,31 @@ deja-la {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	max-width: 50vw;
+
 	min-width: 500px;
+	max-width: 50vw;
 
 	color: $yellow;
 	background: rgba(0, 0, 0, 0.8);
 	border: 0;
 
+	h3 {
+		margin-bottom: 0;
+	}
+
+	h3,
 	p {
 		margin-top: 0;
+	}
+
+	input[type="text"] {
+		width: 100%;
+		margin: 20px 0;
+		padding: 15px;
+		box-sizing: border-box;
+
+		color: black;
+		background: white;
 	}
 }
 
