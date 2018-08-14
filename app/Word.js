@@ -25,16 +25,17 @@ class Word {
 	static destroy(words) {
 		if (words.length > 0) {
 			let wordsString = (words.length == 1) ? words : words.join(', ');
-			displayDialog(`Are you sure you want to delete ${wordsString}?`,
+			(new Dialog()).message(`Are you sure you want to delete ${wordsString}?`,
 				() => {
 					eddyt('delete',
 						{ words: words },
-						() => {
+						(data) => {
 							for (let word of qq('the-word')) {
 								if (words.indexOf(word.textContent) > -1) {
 									word.parentNode.remove();
 								}
 							}
+							Word.checkedWordToolbar();
 						},
 						() => {
 							console.log('bugger :(');

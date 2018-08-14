@@ -19,9 +19,11 @@ function deleteWords ($words) {
 		foreach ($words as $i => $word) {
 			$words[$i] = '"' . escape(trim($word)) . '"';
 		}
+		$words = array_unique($words);
 		if ($words) {
 			$in = implode(',', $words);
 			query("DELETE FROM words WHERE word IN ($in)");
+			sendAsJSON($words);
 		}
 	}
 
