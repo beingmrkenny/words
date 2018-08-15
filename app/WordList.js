@@ -77,7 +77,10 @@ class WordList {
 			'Edit tag',
 			'EditTagForm',
 			() => {
-				q('#Dialog input').value = tag;
+				let input = q('#Dialog input');
+				input.value = tag;
+				input.classList.add('tag-input');
+				input.focus();
 			},
 			() => {
 				eddyt('edit',
