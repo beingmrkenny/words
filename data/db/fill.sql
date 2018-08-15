@@ -15,12 +15,11 @@ insert into words (word, fave) values
     ('ertyertyerty', 0),
     ('gsgsdfg', 0);
 
-insert into tags (tag, jealous) values
-    ('tag one', 0),
-    ('this tag', 0),
-    ('that rag', 0),
-    ('JEALOUS', 1),
-    ('MOREJEALOUS', 1);
+insert into tags (tag) values
+    ('tag one'),
+    ('this tag'),
+    ('that rag'),
+    ('MOREJEALOUS');
 
 delete from word2tag;
 insert into word2tag (word, tag) values

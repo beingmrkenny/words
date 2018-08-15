@@ -86,7 +86,7 @@ class WordList {
 				eddyt('edit',
 					{ tag: tag, newTag: newTag },
 					() => {
-						// find correnct tag and fuck it
+						console.log('shittle');
 					},
 					() => {
 						console.log('pistle :(');

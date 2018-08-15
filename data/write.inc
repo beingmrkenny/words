@@ -39,10 +39,15 @@ function addWords ($words) {
 
 // NOTE TAGS
 
-function addTag ($tag, $jealous=false) {
+function addTag ($tag) {
 	$tag = escape($tag);
-	$jealous = ($jealous) ? 1 : 0;
-	query("INSERT INTO tags (tag, jealous) VALUES ('$tag', $jealous)");
+	query("INSERT INTO tags (tag) VALUES ('$tag')");
+}
+
+function editTag ($tag, $newTag) {
+	$tag = escape($tag);
+	$newTag = escape($newTag);
+	query("UPDATE tags SET tag = '$newTag' WHERE tag = '$tag'");
 }
 
 function deleteTag ($tag) {
@@ -51,13 +56,31 @@ function deleteTag ($tag) {
 }
 
 function wordTagHelper ($tags, $words, $insert) {
+
+	if (
+		(is_array($tags) && count($tags) == 0)
+		|| (!is_array($tags) && !is_string($tags))
+	) {
+		return;
+	}
+
+	if (
+		(is_array($words) && count($words) == 0)
+		|| (!is_array($tags) && !is_string($tags))
+	) {
+		return;
+	}
+
 	$valuePairs = array();
-	if (!is_array($tags)) {
+
+	if (is_string($tags)) {
 		$tags = [$tags];
 	}
-	if (!is_array($words)) {
+
+	if (is_string($words)) {
 		$words = [$words];
 	}
+
 	foreach ($tags as $tag) {
 		$tag = trim($tag);
 		foreach ($words as $word) {
