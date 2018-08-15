@@ -24,18 +24,22 @@ class WordList {
 	}
 
 	static separateFaves (list) {
-
 		var ul = list.querySelector('ul');
-
 		for (let fave of qq('[data-fave="1"]', ul)) {
+
 			if (ul.firstElementChild) {
-				let reference = (q('[data-fave="1"]', ul))
-					? q('[data-fave="0"]', ul)
-					: ul.firstElementChild;
-				ul.insertBefore(fave, reference);
+
+				ul.insertBefore(
+					fave,
+					(ul.firstElementChild.dataset.fave == 1)
+						? q('[data-fave="0"]', ul)
+						: ul.firstElementChild
+				);
+
 			} else {
 				ul.appendChild(fave);
 			}
+
 		}
 	}
 
@@ -67,8 +71,8 @@ class WordList {
 
 	}
 
-	static edit (wordList) {
-		let tag = wordList.querySelector('h2').textContent.trim();
+	static edit (tag) {
+		tag = tag.trim();
 		(new Dialog()).form(
 			'Edit tag',
 			'EditTagForm',

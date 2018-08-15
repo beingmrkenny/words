@@ -14,11 +14,14 @@ word-list {
 	overflow-x: hidden;
 	padding: 0 20px;
 
-	.list-header {
-		display: flex;
-		flex: 0 0 auto;
-		flex-flow: row wrap;
-		overflow: hidden;
+	h2 {
+		margin-top: 0;
+		margin-bottom: 15px;
+
+		white-space: nowrap;
+
+		cursor: pointer;
+		width: 100%;
 	}
 
 	ul {
@@ -26,31 +29,6 @@ word-list {
 		flex: 1 1 auto;
 
 		overflow-y: scroll;
-	}
-
-	.list-header {
-		h2 {
-			margin-top: 0;
-			margin-bottom: 15px;
-
-			white-space: nowrap;
-
-			cursor: pointer;
-			width: 100%;
-		}
-
-		tool-bar {
-			display: none;
-			flex-wrap: nowrap;
-
-			margin-bottom: 15px;
-		}
-
-		&.active {
-			tool-bar {
-				display: flex;
-			}
-		}
 	}
 
 	ul,

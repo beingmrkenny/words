@@ -57,6 +57,14 @@ setTimeout(function () {
 					for (let list of qq('word-list')) {
 						WordList.separateFaves(list);
 					}
+					break;
+
+				case '🔠':
+				case '🔀':
+					for (let list of qq('word-list')) {
+						WordList.sort(list, this.textContent);
+					}
+					break;
 
 				case '☝️':
 					for (let active of qq('li.active')) {
@@ -68,23 +76,9 @@ setTimeout(function () {
 					Word.checkedWordToolbar();
 					break;
 
-				case '🔠':
-					WordList.sort(this.closest('word-list'), this.textContent);
-					break;
-
-				case '🔀':
-					WordList.sort(this.closest('word-list'), this.textContent);
-					break;
-
 				case '✏️':
-					let word = this.closest('li');
-					if (word) {
-						Word.edit(this)
-					} else {
-						WordList.edit(this.closest('word-list'));
-					}
+					Word.edit(this.closest('li'));
 					break;
-
 
 				case '⭐️':
 					Word.fave(words);
@@ -128,18 +122,12 @@ function displayWords (words) {
 
 		if (tag.tag === null) {
 			h2.textContent = 'INBOX';
-			for (let button of qq('button', wordList)) {
-				if (button.textContent == '✏️') {
-					button.remove();
-				}
-			}
 		} else {
 			h2.textContent = tag.tag.toLowerCase();
+			h2.addEventListener('click', function () {
+				WordList.edit(this.textContent);
+			});
 		}
-
-		h2.addEventListener('click', function () {
-			this.closest('.list-header').classList.toggle('active');
-		});
 
 		tag.words = shuffle(tag.words);
 
