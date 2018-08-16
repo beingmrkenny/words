@@ -1,4 +1,7 @@
 <?php
+
+// FIXME unique constraint fails quite often on this — make sure that words in multiple tags are being tagged regardless of whether the insert words statement fails
+
 require_once 'write.inc';
 
 $csvFiles = glob('../snippets/csv/*.csv');
