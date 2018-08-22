@@ -20,8 +20,17 @@ class Dialog {
 			this.dialog.querySelector('content-placeholder')
 		);
 		this.dialog.querySelector('h3').textContent = message;
-		prepareForm();
+		prepareForm(this.dialog);
 		this.okCancel(ok);
+		this.dialog.querySelector('form input').addEventListener ('keyup', function (ev) {
+			if (ev.key == 'Enter') {
+				ok();
+				qid('Dialog').remove();
+			}
+		});
+		this.dialog.querySelector('form').addEventListener ('submit', function (ev) {
+			ev.preventDefault();
+		});
 	}
 
 	okCancel (ok) {

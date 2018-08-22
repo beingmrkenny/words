@@ -16,7 +16,6 @@ xhr.send();
 q('#AddWord button').addEventListener ('click', Word.save);
 
 var wordInput = q('#AddWord input');
-
 wordInput.addEventListener ('keyup', function (ev) {
 
 	if (ev.key == 'Escape') {
@@ -33,6 +32,8 @@ wordInput.addEventListener ('keyup', function (ev) {
 			hiddenWords = qq('.display-none', wordList);
 		wordList.classList.toggle('display-none', (allWords.length == hiddenWords.length));
 	}
+
+
 
 });
 
@@ -125,7 +126,7 @@ function displayWords (words) {
 		} else {
 			h2.textContent = tag.tag.toLowerCase();
 			h2.addEventListener('click', function () {
-				WordList.edit(this.textContent);
+				WordList.edit(this);
 			});
 		}
 

@@ -14,12 +14,18 @@ function eddyt (action, ...args) {
 
 	if (typeof data != 'undefined') {
 		for (let name in data) {
-			for (let item of data[name]) {
-				if (name == 'words') {
-					words.push(item);
+
+			if (typeof data[name] == 'string') {
+				url += `&${name}=${data[name]}`;
+			} else {
+				for (let item of data[name]) {
+					if (name == 'words') {
+						words.push(item);
+					}
+					url += `&${name}[]=${item}`;
 				}
-				url += `&${name}[]=${item}`;
 			}
+
 		}
 	}
 

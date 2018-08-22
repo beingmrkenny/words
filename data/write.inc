@@ -48,6 +48,10 @@ function editTag ($tag, $newTag) {
 	$tag = escape($tag);
 	$newTag = escape($newTag);
 	query("UPDATE tags SET tag = '$newTag' WHERE tag = '$tag'");
+	sendAsJSON([
+		'tag' => $tag,
+		'newTag' => $newTag
+	]);
 }
 
 function deleteTag ($tag) {

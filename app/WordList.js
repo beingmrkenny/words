@@ -71,22 +71,26 @@ class WordList {
 
 	}
 
-	static edit (tag) {
-		tag = tag.trim();
+	static edit (tagHeader) {
+		var list = tagHeader.closest('word-list'),
+			tag = tagHeader.textContent.trim();
 		(new Dialog()).form(
 			'Edit tag',
 			'EditTagForm',
-			() => {
-				let input = q('#Dialog input');
+			(dialog) => {
+				let input = q('input', dialog);
 				input.value = tag;
 				input.classList.add('tag-input');
 				input.focus();
 			},
 			() => {
-				eddyt('edit',
+				var newTag = ovalue(q('.tag-input'), 'value').trim();
+				eddyt('edit-tag',
 					{ tag: tag, newTag: newTag },
-					() => {
-						console.log('shittle');
+					(data) => {
+						list.querySelector('h2').textContent = data.newTag;
+						// TODO got to here
+						// re-sort the lists
 					},
 					() => {
 						console.log('pistle :(');
@@ -94,9 +98,6 @@ class WordList {
 				);
 			}
 		);
-		// popup a form
-		// save that shit
-		// update the UI on success or just fuck off and die on failuere
 	}
 
 }
