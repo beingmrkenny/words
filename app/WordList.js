@@ -71,6 +71,20 @@ class WordList {
 
 	}
 
+	static sortLists () {
+		var lists = [].slice.call(qq('word-list')),
+			main = q('main');
+
+		lists.sort((a, b) => {
+			a = a.querySelector('h2').textContent;
+			b = b.querySelector('h2').textContent;
+			return (a > b) ? 1 : -1;
+		});
+		for (let list of lists) {
+			main.appendChild(list);
+		}
+	}
+
 	static edit (tagHeader) {
 		var list = tagHeader.closest('word-list'),
 			tag = tagHeader.textContent.trim();
@@ -89,8 +103,7 @@ class WordList {
 					{ tag: tag, newTag: newTag },
 					(data) => {
 						list.querySelector('h2').textContent = data.newTag;
-						// TODO got to here
-						// re-sort the lists
+						WordList.sortLists();
 					},
 					() => {
 						console.log('pistle :(');
