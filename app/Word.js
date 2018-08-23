@@ -20,7 +20,7 @@ class Word {
 	static tags(words) {
 
 		// FIXME does this work
-		let formHeader = 'Tagging: ' += (words.length > 5)
+		let formHeader = 'Tagging: ' + (words.length > 5)
 			? words.length + ' words'
 			: words.join(', ');
 
