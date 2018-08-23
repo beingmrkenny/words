@@ -13,8 +13,19 @@ function addWord ($word) {
 	}
 }
 
+function editWord ($oldSpelling, $newSpelling) {
+	$oldSpelling = escape(trim($oldSpelling));
+	$newSpelling = escape(trim($newSpelling));
+	if ($newSpelling) {
+		query("UPDATE words SET word = '$newSpelling' WHERE word = '$oldSpelling'");
+	}
+	sendAsJSON([
+		"oldSpelling" => $oldSpelling,
+		"newSpelling" => $newSpelling
+	]);
+}
+
 function deleteWords ($words) {
-	_el($words);
 	if (is_array($words)) {
 		foreach ($words as $i => $word) {
 			$words[$i] = '"' . escape(trim($word)) . '"';

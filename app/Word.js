@@ -68,9 +68,16 @@ class Word {
 
 			if (checkedCount == 0 && activeCount == 0) {
 				q('.checked').classList.add('active');
+				let box = wordLi.getBoundingClientRect();
+				let toolbar = wordLi.querySelector('tool-bar');
+				toolbar.style.top = `${box.y - 65}px`;
+				toolbar.style.left = `${box.x - 50}px`;
 			} else {
 				for (let active of qq('li.active')) {
 					active.classList.remove('active');
+				}
+				for (let styled of qq('tool-bar[style]')) {
+					styled.style = null;
 				}
 			}
 
@@ -125,6 +132,38 @@ class Word {
 
 		return wordsToAdd;
 	}
+
+	static edit (li) {
+		var word = li.querySelector('the-word').textContent.trim();
+		(new Dialog()).form(
+			'Edit word',
+			'EditItemForm',
+			(dialog) => {
+				let input = q('input', dialog);
+				input.value = word;
+				input.classList.add('word-input');
+				input.focus();
+			},
+			() => {
+				var newSpelling = ovalue(q('.word-input'), 'value').trim();
+				eddyt('edit-word',
+					{ oldSpelling: word, newSpelling: newSpelling },
+					(data) => {
+						for (let existingTheWord of qq('the-word')) {
+							if (existingTheWord.textContent == data.oldSpelling) {
+								existingTheWord.textContent = data.newSpelling;
+							}
+						}
+						WordList.sort(li.closest('word-list'));
+					},
+					() => {
+						console.log('pistle word :(');
+					}
+				);
+			}
+		);
+	}
+
 
 	static save () {
 

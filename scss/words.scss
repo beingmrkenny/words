@@ -41,6 +41,7 @@ word-list {
 	}
 
 	li {
+		position: relative;
 		min-height: 1.6em;
 
 		line-height: 1.6em;
@@ -66,13 +67,23 @@ word-list {
 
 	li tool-bar {
 		display: none;
+		position: fixed;
+		border-radius: 3px;
+		padding: 1px;
 		button {
-			margin: 0 5px 5px 0;
+		    padding: 13px;
+		    font-size: 30px;
+		    width: auto;
+		    height: auto;
+		    line-height: 1;
+		    border-radius: 70px;
+			background: rgba(black, .67);
 		}
 	}
 
 	li.active tool-bar {
-		display: block;
+		display: flex;
+		z-index: 1000;
 	}
 }
 

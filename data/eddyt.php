@@ -9,6 +9,10 @@ switch ($_POST['action']) {
 		toggleFaveWords ($_POST['words']);
 		break;
 
+	case 'edit-word':
+		editWord ($_POST['oldSpelling'], $_POST['newSpelling']);
+		break;
+
 	case 'edit-tag':
 		editTag ($_POST['tag'], $_POST['newTag']);
 		break;

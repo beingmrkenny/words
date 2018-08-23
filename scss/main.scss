@@ -114,14 +114,12 @@ deja-la {
 		padding: 12px 4px;
 		box-sizing: border-box;
 
-		color: $dark;
-		background: $light;
+		color: $light;
+		background: rgba($dark, .5);
 
 		transition: box-shadow 1s;
 
 		&.tag-input {
-			color: $light;
-			background: rgba($dark, .5);
 			padding: 15px 10px 18px;
 			font-size: 24px;
 			font-weight: bold;

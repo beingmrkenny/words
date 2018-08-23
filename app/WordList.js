@@ -90,7 +90,7 @@ class WordList {
 			tag = tagHeader.textContent.trim();
 		(new Dialog()).form(
 			'Edit tag',
-			'EditTagForm',
+			'EditItemForm',
 			(dialog) => {
 				let input = q('input', dialog);
 				input.value = tag;
