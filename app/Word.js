@@ -17,8 +17,45 @@ class Word {
 		);
 	}
 
-	static tags(words, add, remove) {
-		eddyt('tags', { words: words, add: add, remove: remove }, success, fail);
+	static tags(words) {
+
+		// FIXME does this work
+		let formHeader = 'Tagging: ' += (words.length > 5)
+			? words.length + ' words'
+			: words.join(', ');
+
+		(new Dialog()).form(
+			formHeader,
+			'TagForm',
+			(dialog) => {
+
+				// TODO finish preparin form — lots of shite to do on this
+
+				var tagList = document.createElement('ul');
+				for (let h2 of qq('word-list h2')) {
+					let tag = h2.textContent.trim();
+					if (tag != 'INBOX') {
+						tagList.appendChild(createElement(`
+							<li><input type="checkbox" value="tag"> ${tag}</li>
+						`));
+					}
+				}
+
+				dialog.querySelector('form').appendChild(tagList);
+
+			},
+			() => {
+				// submit form
+				eddyt(
+					'tagging-words',
+					{ words: words },
+					(data) => {
+
+					}
+				);
+			}
+		);
+
 	}
 
 	// FIXME this is piss poor - butt why?

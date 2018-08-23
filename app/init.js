@@ -86,10 +86,7 @@ setTimeout(function () {
 					break;
 
 				case '🏷':
-					// TODO dialog
-					let add = [],
-						remove = [];
-					Word.tags(words, add, remove);
+					Word.tags(words);
 					break;
 
 				case '🗑':
