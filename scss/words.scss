@@ -138,7 +138,11 @@ the-word {
 		cursor: pointer;
 	}
 
-	input {
+	input[type="text"] {
+		margin-bottom: 0;
+	}
+
+	input[type="checkbox"] {
 		margin: 0;
 		height: auto;
 		vertical-align: bottom;

@@ -12,6 +12,24 @@ function getWordsForTag ($tag) {
 	return $db->get_results("SELECT word, fave FROM words JOIN word2tag USING (word) WHERE tag = '$tag'");
 }
 
+function getWordTagPairsForWords ($words) {
+	global $db;
+	if (is_array($words) && count($words) > 0) {
+		foreach ($words as $key => $word) {
+			$words[$key] = '"' . escape($word) . '"';
+		}
+		$wordsString = implode($words, ',');
+		$pairs = $db->get_results("SELECT tag, word FROM word2tag WHERE word IN ($wordsString)");
+		$returnArray = [];
+		foreach ($pairs as $pair) {
+			$returnArray[$pair->tag][] = $pair->word;
+		}
+		if (count($returnArray) > 0) {
+			return $returnArray;
+		}
+	}
+}
+
 function wordIsTagged ($word, $tag) {
 	global $db;
 	$word = escape($word);

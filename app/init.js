@@ -33,8 +33,6 @@ wordInput.addEventListener ('keyup', function (ev) {
 		wordList.classList.toggle('display-none', (allWords.length == hiddenWords.length));
 	}
 
-
-
 });
 
 setTimeout(function () {

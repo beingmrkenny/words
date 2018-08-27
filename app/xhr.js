@@ -47,3 +47,21 @@ function eddyt (action, ...args) {
 	xhr.send(url);
 
 }
+
+function ghent (method, url, success) {
+	var xhr = new XMLHttpRequest();
+	xhr.open(method, url, true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.addEventListener("readystatechange", function() {
+		if (this.status == 200) {
+			if (this.readyState == XMLHttpRequest.DONE) {
+				try {
+					success(JSON.parse(xhr.response));
+				} catch (wee) {
+					console.log(wee);
+				}
+			}
+		}
+	});
+	xhr.send(url);
+}

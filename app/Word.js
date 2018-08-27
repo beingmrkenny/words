@@ -37,20 +37,51 @@ class Word {
 
 				dialog.querySelector('h3').innerHTML = formHeader;
 
-				// TODO finish preparin form — lots of shite to do on this
-
 				var tagList = document.createElement('ul');
 				for (let h2 of qq('word-list h2')) {
 					let tag = h2.textContent.trim();
 					if (tag != 'INBOX') {
-						let id = tag.replace(/[^a-z]/gi, '');
-						tagList.appendChild(createElement(`
-							<li><label for="TagInput-${id}"><input type="checkbox" value="tag" id="TagInput-${id}"> ${tag}</label></li>
-						`));
+						let id = tag.replace(/[^a-z]/gi, ''),
+							li = createElement(`
+								<li><label for="TagInput-${id}">
+									<input type="checkbox" value="${tag}" id="TagInput-${id}"> ${tag}
+								</label></li>
+							`);
+						li.querySelector('label').addEventListener('click', function (event) {
+							event.preventDefault();
+							let input = this.querySelector('input');
+							if (input.disabled) {
+								input.disabled = false;
+							} else {
+								input.checked = !input.checked;
+							}
+						});
+						tagList.appendChild(li);
 					}
 				}
 
 				dialog.querySelector('form').appendChild(tagList);
+
+				let wordsHTTPArray = '';
+				for (let word of words) {
+					wordsHTTPArray += `&words[]=${word}`;
+				}
+
+				ghent('POST', '/words/data/ghent.php?what=WordsAndTags'+wordsHTTPArray, (data) => {
+					let wordsCount = words.length;
+					for (let tag in data) {
+						let taggedCount = data[tag].length,
+							input = q(`input[value="${tag}"]`);
+
+						// if any words are tagged with this tag, check it
+						input.checked = (taggedCount == 0) ? false : true;
+
+						// if all words are tagged with this tag, or if none are, checkbox is enabled,
+						// otherwise (if only some are), not
+						input.disabled = (taggedCount == wordsCount || taggedCount == 0) ? false : true;
+
+					}
+				});
 
 			},
 			() => {
