@@ -87,6 +87,10 @@ word-list {
 	}
 }
 
+a-word {
+	color: $light;
+}
+
 the-word {
 	cursor: pointer;
 
@@ -108,4 +112,36 @@ the-word {
 		background: $red;
 		border-radius: 3px;
 	}
+}
+
+#TagFormDialog {
+
+	ul, li {
+		margin: 0;
+		padding: 0;
+	}
+
+	ul {
+		margin: 20px 0;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	li {
+		display: inline;
+		list-style: none;
+		margin: 15px;
+	}
+
+	label {
+		white-space: nowrap;
+		cursor: pointer;
+	}
+
+	input {
+		margin: 0;
+		height: auto;
+		vertical-align: bottom;
+	}
+
 }

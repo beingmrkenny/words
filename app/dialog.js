@@ -2,8 +2,8 @@ class Dialog {
 
 	constructor () {
 		this.dialog = getTemplate('DialogTemplate');
-		this.dialog.open = true;
 		document.body.appendChild(this.dialog);
+		this.dialog.showModal();
 	}
 
 	message (message, ok) {
@@ -19,13 +19,14 @@ class Dialog {
 			getTemplate(formId),
 			this.dialog.querySelector('content-placeholder')
 		);
+		this.dialog.id = formId + 'Dialog';
 		this.dialog.querySelector('h3').textContent = message;
 		prepareForm(this.dialog);
 		this.okCancel(ok);
 		this.dialog.querySelector('form input').addEventListener ('keyup', function (ev) {
 			if (ev.key == 'Enter') {
 				ok();
-				qid('Dialog').remove();
+				q('dialog').remove();
 			}
 		});
 		this.dialog.querySelector('form').addEventListener ('submit', function (ev) {
@@ -36,10 +37,10 @@ class Dialog {
 	okCancel (ok) {
 		qid('OK').addEventListener('click', () => {
 			ok();
-			qid('Dialog').remove();
+			q('dialog').remove();
 		});
 		qid('Cancel').addEventListener('click', () => {
-			qid('Dialog').remove();
+			q('dialog').remove();
 		});
 	}
 

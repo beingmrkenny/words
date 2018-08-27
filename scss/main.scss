@@ -85,7 +85,7 @@ deja-la {
 	}
 }
 
-#Dialog {
+dialog {
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -96,8 +96,14 @@ deja-la {
 	max-width: 50vw;
 
 	color: $yellow;
+	box-shadow: 0 0 10px $yellow;
 	background: rgba(0, 0, 0, 0.8);
 	border: 0;
+	border-radius: 2px;
+
+	&::backdrop {
+		background: rgba($yellow, 0.28);
+	}
 
 	h3 {
 		margin-bottom: 0;

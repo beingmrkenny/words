@@ -19,15 +19,23 @@ class Word {
 
 	static tags(words) {
 
-		// FIXME does this work
-		let formHeader = 'Tagging: ' + (words.length > 5)
-			? words.length + ' words'
-			: words.join(', ');
-
 		(new Dialog()).form(
-			formHeader,
+			'Tagging',
 			'TagForm',
 			(dialog) => {
+
+				let formHeader = 'Tagging ';
+				if (words.length > 5) {
+					formHeader = words.length + ' words';
+				} else {
+					let x = words.length - 1,
+						amp = x - 1;
+					for (let i = 0; i<=x; i++) {
+						formHeader += `<a-word>${words[i]}</a-word>` + (i == amp ? ' & ' : (i == x) ? '' : ', ');
+					}
+				}
+
+				dialog.querySelector('h3').innerHTML = formHeader;
 
 				// TODO finish preparin form — lots of shite to do on this
 
@@ -35,8 +43,9 @@ class Word {
 				for (let h2 of qq('word-list h2')) {
 					let tag = h2.textContent.trim();
 					if (tag != 'INBOX') {
+						let id = tag.replace(/[^a-z]/gi, '');
 						tagList.appendChild(createElement(`
-							<li><input type="checkbox" value="tag"> ${tag}</li>
+							<li><label for="TagInput-${id}"><input type="checkbox" value="tag" id="TagInput-${id}"> ${tag}</label></li>
 						`));
 					}
 				}
