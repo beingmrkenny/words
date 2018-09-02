@@ -1,9 +1,9 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+WRDSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
-wordsDir=$(jq -r .wordsDir $DIR/config.json);
-refreshOnWatch=$(jq -r .refreshOnWatch $DIR/config.json);
-scssCompressionStyle=$(jq -r .scssCompressionStyle $DIR/config.json);
-googleCompiler=$(jq -r .googleCompiler $DIR/config.json);
+wordsDir=$(jq -r .wordsDir $WRDSDIR/config.json);
+refreshOnWatch=$(jq -r .refreshOnWatch $WRDSDIR/config.json);
+scssCompressionStyle=$(jq -r .scssCompressionStyle $WRDSDIR/config.json);
+googleCompiler=$(jq -r .googleCompiler $WRDSDIR/config.json);
 
 alias ww="wordswatch";
 

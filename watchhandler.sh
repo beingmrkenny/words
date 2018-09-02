@@ -1,4 +1,4 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+WRDSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 function lc(){
     echo $1 | tr '[:upper:]' '[:lower:]';
@@ -40,7 +40,7 @@ function color() {
     printf "\n$colorCode$text\e[1;37m\n\n";
 }
 
-source $DIR/words.sh;
+source $WRDSDIR/words.sh;
 
 wordscompile;
 
