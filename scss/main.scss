@@ -55,7 +55,7 @@ button {
 
 	color: $light;
 	background: rgba(0, 0, 0, 0.26);
-	border: 1px solid transparent;
+	border: 1px solid rgba($light, .1);
 	border-radius: 3px;
 
 	line-height: 20px;

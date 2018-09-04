@@ -85,11 +85,33 @@ class Word {
 
 			},
 			() => {
-				// submit form
+				let add = [], remove = [];
+				for (let checkbox of qq('#TagFormDialog input[type="checkbox"]')) {
+					if (!checkbox.disabled) {
+						( checkbox.checked ? add : remove ).push(checkbox.value);
+					}
+				}
 				eddyt(
 					'tagging-words',
-					{ words: words },
+					{ words : words, add : add, remove: remove },
 					(data) => {
+
+						for (let word in data) {
+
+							for (let tag of data[word].add) {
+								q(`word-list[data-tag="${tag}"]`).appendChild(Word.create(word));
+								// TODO find in inbox and remove
+							}
+
+							for (let tag of data[word].remove) {
+								var found = q(`[data-word="${word}"]`, q(`word-list[data-tag="${tag}"]`));
+								if (found) {
+									let removed = found.remove();
+									// TODO add removed to INBOX
+								}
+							}
+
+						}
 
 					}
 				);
@@ -129,11 +151,17 @@ class Word {
 			theWord = wordLi.querySelector('the-word'),
 			hands = [ '👉🏻', '👉🏼', '👉🏽', '👉🏾', '👉🏿' ];
 
+		wordLi.dataset.word = word.word;
+		theWord.textContent = word.word;
 		wordLi.dataset.hand = hands[Math.floor(Math.random() * 5)];
 		wordLi.dataset.fave = word.fave;
-		theWord.textContent = word.word;
+
 		if (newWord) {
 			theWord.classList.add('new');
+		}
+
+		for (let button of qq('button', wordLi)) {
+			button.addEventListener('click', buttonClickHandler);
 		}
 
 		wordLi.addEventListener('click', function () {

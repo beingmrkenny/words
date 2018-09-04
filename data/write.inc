@@ -76,14 +76,14 @@ function wordTagHelper ($tags, $words, $insert) {
 		(is_array($tags) && count($tags) == 0)
 		|| (!is_array($tags) && !is_string($tags))
 	) {
-		return;
+		return false;
 	}
 
 	if (
 		(is_array($words) && count($words) == 0)
 		|| (!is_array($tags) && !is_string($tags))
 	) {
-		return;
+		return false;
 	}
 
 	$valuePairs = array();
@@ -109,28 +109,30 @@ function wordTagHelper ($tags, $words, $insert) {
 	}
 	$valuePairs = array_unique($valuePairs);
 
-	if ($insert) {
-		query('INSERT INTO word2tag (word, tag) VALUES ' . implode($valuePairs, ','));
-	} else {
-		query('DELETE FROM word2tag WHERE ' . implode($valuePairs, ' OR ')); // FIXME untested
-	}
+	$query = ($insert)
+		? 'INSERT INTO word2tag (word, tag) VALUES ' . implode($valuePairs, ',')
+		: 'DELETE FROM word2tag WHERE ' . implode($valuePairs, ' OR '); // FIXME untested
+
+	query($query);
+
+	return true;
 
 }
 
 function tagWords ($tags, $words) {
-	wordTagHelper($tags, $words, true);
+	return wordTagHelper($tags, $words, true);
 }
 
 function detagWords ($tags, $words) {
-	wordTagHelper($tags, $words, false);
+	return wordTagHelper($tags, $words, false);
 }
 
 function tagWord ($tags, $words) {
-	wordTagHelper($tags, $words, true);
+	return wordTagHelper($tags, $words, true);
 }
 
 function detagWord ($tags, $words) {
-	wordTagHelper($tags, $words, false);
+	return wordTagHelper($tags, $words, false);
 }
 
 

@@ -17,9 +17,20 @@ switch ($_POST['action']) {
 		editTag ($_POST['tag'], $_POST['newTag']);
 		break;
 
-	case 'tags':
-		tagWords ($_POST['tagsToAdd'], $_POST['words']);
-		detagWords ($_POST['tagsToRemove'], $_POST['words']);
+	case 'tagging-words':
+		if (
+			tagWords ($_POST['add'], $_POST['words'])
+			|| detagWords ($_POST['remove'], $_POST['words'])
+		) {
+			$words = array();
+			foreach ($_POST['words'] as $word) {
+				$words[$word] = [
+					'add' => $_POST['add'],
+					'remove' => $_POST['remove']
+				];
+			}
+			sendASJson($words);
+		}
 		break;
 
 	case 'delete':

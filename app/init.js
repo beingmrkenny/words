@@ -35,67 +35,64 @@ wordInput.addEventListener ('keyup', function (ev) {
 
 });
 
-setTimeout(function () {
+for (let button of qq('button')) {
+	button.addEventListener('click', buttonClickHandler);
+}
 
-	for (let button of qq('button')) {
+function buttonClickHandler () {
 
-		button.addEventListener('click', function () {
+	var wordLis = qq('li.active, li.checked'),
+		words = [];
 
-			var wordLis = qq('li.active, li.checked'),
-				words = [];
-
-			if (wordLis.length > 0) {
-				for (let word of wordLis) {
-					words.push(word.querySelector('the-word').textContent);
-				}
-			}
-
-			switch (this.textContent) {
-
-				case '⭐️👀':
-					for (let list of qq('word-list')) {
-						WordList.separateFaves(list);
-					}
-					break;
-
-				case '🔠':
-				case '🔀':
-					for (let list of qq('word-list')) {
-						WordList.sort(list, this.textContent);
-					}
-					break;
-
-				case '☝️':
-					for (let active of qq('li.active')) {
-						active.classList.remove('active');
-					}
-					for (let checked of qq('li.checked')) {
-						checked.classList.remove('checked');
-					}
-					Word.checkedWordToolbar();
-					break;
-
-				case '✏️':
-					Word.edit(this.closest('li'));
-					break;
-
-				case '⭐️':
-					Word.fave(words);
-					break;
-
-				case '🏷':
-					Word.tags(words);
-					break;
-
-				case '🗑':
-					Word.destroy(words);
-					break;
-			}
-
-		});
+	if (wordLis.length > 0) {
+		for (let word of wordLis) {
+			words.push(word.querySelector('the-word').textContent);
+		}
 	}
 
-}, 0);
+	switch (this.textContent) {
+
+		case '⭐️👀':
+			for (let list of qq('word-list')) {
+				WordList.separateFaves(list);
+			}
+			break;
+
+		case '🔠':
+		case '🔀':
+			for (let list of qq('word-list')) {
+				WordList.sort(list, this.textContent);
+			}
+			break;
+
+		case '☝️':
+			for (let active of qq('li.active')) {
+				active.classList.remove('active');
+			}
+			for (let checked of qq('li.checked')) {
+				checked.classList.remove('checked');
+			}
+			Word.checkedWordToolbar();
+			break;
+
+		case '✏️':
+			Word.edit(this.closest('li'));
+			break;
+
+		case '⭐️':
+			Word.fave(words);
+			break;
+
+		case '🏷':
+			Word.tags(words);
+			break;
+
+		case '🗑':
+			Word.destroy(words);
+			break;
+	}
+
+}
 
 function displayWords (words) {
 
@@ -117,18 +114,21 @@ function displayWords (words) {
 			h2 = wordList.querySelector('h2');
 
 		if (tag.tag === null) {
+			wordList.dataset.tag = 'INBOX';
 			h2.textContent = 'INBOX';
 		} else {
+			wordList.dataset.tag = tag.tag;
 			h2.textContent = tag.tag.toLowerCase();
 			h2.addEventListener('click', function () {
 				WordList.edit(this);
 			});
 		}
 
-		tag.words = shuffle(tag.words);
-
-		for (let word of tag.words) {
-			wordListUl.appendChild(Word.create(word));
+		if (tag.words) {
+			tag.words = shuffle(tag.words);
+			for (let word of tag.words) {
+				wordListUl.appendChild(Word.create(word));
+			}
 		}
 
 		if (tag.tag === null && main.firstElementChild) {
