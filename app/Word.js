@@ -11,116 +11,160 @@ class Word {
 					}
 				}
 			},
-			() => {
-				console.log('oh, shit');
-			}
+			() => { console.log('oh, shit'); }
 		);
 	}
 
-	static tags(words) {
+	static prepareEditTagsForm (dialog, words) {
 
+		words = unique(words);
+
+		let formHeader = 'Tagging ';
+		if (words.length > 5) {
+			formHeader = words.length + ' words';
+		} else {
+			let x = words.length - 1,
+				amp = x - 1;
+			for (let i = 0; i<=x; i++) {
+				formHeader += `<a-word>${words[i]}</a-word>` + (i == amp ? ' & ' : (i == x) ? '' : ', ');
+			}
+		}
+
+		dialog.querySelector('h3').innerHTML = formHeader;
+
+		var tagList = document.createElement('ul');
+		for (let h2 of qq('word-list h2')) {
+			let tag = h2.textContent.trim();
+			if (tag != 'INBOX') {
+				let id = tag.replace(/[^a-z]/gi, ''),
+					li = createElement(`
+						<li><label for="TagInput-${id}">
+							<input type="checkbox" value="${tag}" id="TagInput-${id}" data-changed="false"> ${tag}
+						</label></li>
+					`);
+				li.querySelector('input').addEventListener('click', function (event) {
+					event.stopPropagation();
+					this.dataset.changed = "true";
+				});
+				li.querySelector('label').addEventListener('click', function (event) {
+					event.preventDefault();
+					let input = this.querySelector('input');
+					if (input.disabled) {
+						input.disabled = false;
+					} else {
+						input.checked = !input.checked;
+					}
+					input.dataset.changed = "true";
+				});
+				tagList.appendChild(li);
+			}
+		}
+
+		dialog.querySelector('form').appendChild(tagList);
+
+		let wordsHTTPArray = '';
+		for (let word of words) {
+			wordsHTTPArray += `&words[]=${word}`;
+		}
+
+		ghent('POST', '/words/data/ghent.php?what=WordsAndTags'+wordsHTTPArray, (data) => {
+			let wordsCount = words.length;
+			for (let tag in data) {
+				let taggedCount = data[tag].length,
+					input = q(`input[value="${tag}"]`);
+				input.checked = (taggedCount == 0) ? false : true;
+				input.disabled = (taggedCount == wordsCount || taggedCount == 0) ? false : true;
+			}
+		});
+
+	}
+
+	static submitEditTagsForm (words) {
+
+		let add = [],
+			remove = [];
+
+		// TODO change this so that only changed inputs are picked up
+		for (let checkbox of qq('#TagFormDialog input[type="checkbox"][data-changed="true"]')) {
+			if (checkbox.disabled === false) {
+				if (checkbox.checked === true) {
+					add.push(checkbox.value);
+				} else {
+					remove.push(checkbox.value);
+				}
+			}
+		}
+
+		let newWords = q('#TagFormDialog input[type="text"]').value;
+		if (newWords) {
+			newWords = newWords.split(',');
+			for (let newWord of newWords) {
+				add.push(newWord.trim());
+			}
+		}
+
+		eddyt(
+			'tagging-words',
+			{ words : words, add : add, remove: remove },
+			(data) => {
+
+				let inbox = q('word-list[data-tag="INBOX"] ul');
+
+				for (let word in data) {
+
+					for (let tag of data[word].add) {
+						let found = q(`[data-word="${word}"]`, q(`word-list[data-tag="${tag}"]`));
+						if (!found) {
+							q(`word-list[data-tag="${tag}"] ul`).appendChild(Word.create(word));
+						}
+
+						let lements = qq(`[data-word="${word}"]`, inbox);
+						removeElements(lements);
+					}
+
+					for (let tag of data[word].remove) {
+						let isFave = '0';
+						for (let wordElement of qq(`[data-word="${word}"]`, q(`word-list[data-tag="${tag}"]`))) {
+							if (wordElement.dataset.fave == '1') {
+								isFave = '1';
+							}
+							removeElements(wordElement);
+						}
+
+						if (!q(`[data-word="${word}"]`, inbox)) {
+							inbox.appendChild(Word.create({ word: word, fave : isFave }));
+						}
+					}
+
+				}
+
+				for (let list of qq('word-list')) {
+					WordList.sort(list);
+					if (q('main').dataset.favesSeparated == '1') {
+						WordList.separateFaves(list);
+					}
+				}
+
+			}
+		);
+
+	}
+
+	static tags(words) {
 		(new Dialog()).form(
 			'Tagging',
 			'TagForm',
 			(dialog) => {
-
-				let formHeader = 'Tagging ';
-				if (words.length > 5) {
-					formHeader = words.length + ' words';
-				} else {
-					let x = words.length - 1,
-						amp = x - 1;
-					for (let i = 0; i<=x; i++) {
-						formHeader += `<a-word>${words[i]}</a-word>` + (i == amp ? ' & ' : (i == x) ? '' : ', ');
-					}
-				}
-
-				dialog.querySelector('h3').innerHTML = formHeader;
-
-				var tagList = document.createElement('ul');
-				for (let h2 of qq('word-list h2')) {
-					let tag = h2.textContent.trim();
-					if (tag != 'INBOX') {
-						let id = tag.replace(/[^a-z]/gi, ''),
-							li = createElement(`
-								<li><label for="TagInput-${id}">
-									<input type="checkbox" value="${tag}" id="TagInput-${id}"> ${tag}
-								</label></li>
-							`);
-						li.querySelector('label').addEventListener('click', function (event) {
-							event.preventDefault();
-							let input = this.querySelector('input');
-							if (input.disabled) {
-								input.disabled = false;
-							} else {
-								input.checked = !input.checked;
-							}
-						});
-						tagList.appendChild(li);
-					}
-				}
-
-				dialog.querySelector('form').appendChild(tagList);
-
-				let wordsHTTPArray = '';
-				for (let word of words) {
-					wordsHTTPArray += `&words[]=${word}`;
-				}
-
-				ghent('POST', '/words/data/ghent.php?what=WordsAndTags'+wordsHTTPArray, (data) => {
-					let wordsCount = words.length;
-					for (let tag in data) {
-						let taggedCount = data[tag].length,
-							input = q(`input[value="${tag}"]`);
-
-						// if any words are tagged with this tag, check it
-						input.checked = (taggedCount == 0) ? false : true;
-
-						// if all words are tagged with this tag, or if none are, checkbox is enabled,
-						// otherwise (if only some are), not
-						input.disabled = (taggedCount == wordsCount || taggedCount == 0) ? false : true;
-
-					}
-				});
-
+				Word.prepareEditTagsForm(dialog, words);
 			},
 			() => {
-				let add = [], remove = [];
-				for (let checkbox of qq('#TagFormDialog input[type="checkbox"]')) {
-					if (!checkbox.disabled) {
-						( checkbox.checked ? add : remove ).push(checkbox.value);
-					}
-				}
-				eddyt(
-					'tagging-words',
-					{ words : words, add : add, remove: remove },
-					(data) => {
-
-						for (let word in data) {
-
-							for (let tag of data[word].add) {
-								q(`word-list[data-tag="${tag}"]`).appendChild(Word.create(word));
-								// TODO find in inbox and remove
-							}
-
-							for (let tag of data[word].remove) {
-								var found = q(`[data-word="${word}"]`, q(`word-list[data-tag="${tag}"]`));
-								if (found) {
-									let removed = found.remove();
-									// TODO add removed to INBOX
-								}
-							}
-
-						}
-
-					}
-				);
+				Word.submitEditTagsForm(words);
 			}
 		);
-
 	}
 
 	// FIXME this is piss poor - butt why?
+		// no idea what the fucking methods do, for one
 	static destroy(words) {
 		if (words.length > 0) {
 			let wordsString = (words.length == 1) ? words : words.join(', ');

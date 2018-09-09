@@ -64,40 +64,44 @@ function createElement(string) {
 
 }
 
-function removeElement (element) {
+function removeElements (elements) {
 
-	var styles = {
-		overflow : 'hidden',
-		margin   : '0',
-		padding  : '0',
-		opacity  : '0',
-		height   : '0'
-	};
-
-	var result;
-
-	if (element instanceof HTMLElement) {
-
-		element.style.height = element.offsetHeight + 'px';
-		element.style.width = element.offsetWidth + 'px';
-		element.style.transition = 'margin 85ms ease-in, padding 85ms ease-in, opacity 85ms ease-in, height 85ms ease-in';
-
-		element.addEventListener('transitionend', function (event) {
-			var element = this;
-			if (event.propertyName == 'height') {
-				element.remove();
-			}
-		});
-
-		window.setTimeout(function () {
-			for (let property in styles) {
-				element.style[property] = styles[property];
-			}
-		}, 10);
-
+	if (elements instanceof HTMLElement) {
+		elements = [elements];
 	}
 
-	return result;
+	if (elements instanceof NodeList || Array.isArray(elements)) {
+
+		for (let element of elements) {
+
+			element.style.height = element.offsetHeight + 'px';
+			element.style.width = element.offsetWidth + 'px';
+			element.style.transition = 'margin 85ms ease-in, padding 85ms ease-in, opacity 85ms ease-in, height 85ms ease-in';
+
+			element.addEventListener('transitionend', function (event) {
+				var element = this;
+				if (event.propertyName == 'height') {
+					element.remove();
+				}
+			});
+
+			let styles = {
+				overflow : 'hidden',
+				margin   : '0',
+				padding  : '0',
+				opacity  : '0',
+				height   : '0'
+			};
+
+			window.setTimeout(function () {
+				for (let property in styles) {
+					element.style[property] = styles[property];
+				}
+			}, 10);
+
+		}
+
+	}
 
 }
 

@@ -21,12 +21,12 @@ function getWordTagPairsForWords ($words) {
 		$wordsString = implode($words, ',');
 		$pairs = $db->get_results("SELECT tag, word FROM word2tag WHERE word IN ($wordsString)");
 		$returnArray = [];
-		foreach ($pairs as $pair) {
-			$returnArray[$pair->tag][] = $pair->word;
+		if (is_array($pairs)) {
+			foreach ($pairs as $pair) {
+				$returnArray[$pair->tag][] = $pair->word;
+			}
 		}
-		if (count($returnArray) > 0) {
-			return $returnArray;
-		}
+		return $returnArray;
 	}
 }
 

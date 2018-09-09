@@ -25,8 +25,8 @@ switch ($_POST['action']) {
 			$words = array();
 			foreach ($_POST['words'] as $word) {
 				$words[$word] = [
-					'add' => $_POST['add'],
-					'remove' => $_POST['remove']
+					'add'    => ( is_array($_POST['add']) )    ? $_POST['add']    : [],
+					'remove' => ( is_array($_POST['remove']) ) ? $_POST['remove'] : []
 				];
 			}
 			sendASJson($words);

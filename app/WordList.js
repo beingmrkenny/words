@@ -41,6 +41,7 @@ class WordList {
 			}
 
 		}
+		q('main').dataset.favesSeparated = '1';
 	}
 
 	static sortUl (ul, lisSelector, by) {
