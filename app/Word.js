@@ -221,10 +221,25 @@ class Word {
 
 			if (checkedCount == 0 && activeCount == 0) {
 				q('.checked').classList.add('active');
-				let box = wordLi.getBoundingClientRect();
+				let wordBox = wordLi.getBoundingClientRect();
 				let toolbar = wordLi.querySelector('tool-bar');
-				toolbar.style.top = `${box.y - 65}px`;
-				toolbar.style.left = `${box.x - 50}px`;
+				let toolbarBox = toolbar.getBoundingClientRect();
+				let left = wordBox.x - 50;
+				toolbar.style.top = `${wordBox.y - 65}px`;
+				toolbar.style.left = `${left}px`;
+				if (left < 0) {
+					setTimeout(() => {
+						toolbar.style.left = '10px';
+					}, 0);
+				}
+				if (toolbarBox.right > window.innerWidth) {
+					setTimeout(() => {
+						toolbar.style.left = `${toolbarBox.left - (toolbarBox.right - window.innerWidth)}px`;
+					}, 0);
+				}
+				if (window.innerWidth < toolbarBox.width) {
+					document.body.appendChild(createElement(`<div class="cunt">get a wider screen you&nbsp;cunt</div>`));
+				}
 			} else {
 				for (let active of qq('li.active')) {
 					active.classList.remove('active');

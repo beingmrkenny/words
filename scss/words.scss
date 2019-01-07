@@ -15,14 +15,14 @@ word-list {
 	padding: 0 20px;
 
 	h2 {
+		width: 100%;
 		margin-top: 0;
 		margin-bottom: 15px;
 
 		white-space: nowrap;
+		font-size: 24px;
 
 		cursor: pointer;
-		width: 100%;
-		font-size: 24px;
 	}
 
 	ul {
@@ -42,6 +42,7 @@ word-list {
 
 	li {
 		position: relative;
+
 		min-height: 1.6em;
 
 		line-height: 1.6em;
@@ -68,16 +69,22 @@ word-list {
 	li tool-bar {
 		display: none;
 		position: fixed;
-		border-radius: 3px;
+
 		padding: 1px;
+
+		border-radius: 3px;
+
+		transition: left .25s ease-out;
 		button {
-		    padding: 13px;
-		    font-size: 30px;
-		    width: auto;
-		    height: auto;
-		    line-height: 1;
-		    border-radius: 70px;
-			background: rgba(black, .67);
+			width: auto;
+			height: auto;
+			padding: 13px;
+
+			background: rgba(black, 0.8);
+			border-radius: 70px;
+
+			line-height: 1;
+			font-size: 30px;
 		}
 	}
 
@@ -115,26 +122,30 @@ the-word {
 }
 
 #TagFormDialog {
-
-	ul, li {
+	ul,
+	li {
 		margin: 0;
 		padding: 0;
 	}
 
 	ul {
-		margin: 10px 0 20px;
 		display: flex;
 		flex-wrap: wrap;
+
+		margin: 10px 0 20px;
 	}
 
 	li {
 		display: inline;
-		list-style: none;
+
 		margin: 5px 15px;
+
+		list-style: none;
 	}
 
 	label {
 		white-space: nowrap;
+
 		cursor: pointer;
 	}
 
@@ -143,9 +154,26 @@ the-word {
 	}
 
 	input[type="checkbox"] {
-		margin: 0;
 		height: auto;
+		margin: 0;
+
 		vertical-align: bottom;
 	}
+}
 
+.cunt {
+	display: flex;
+	position: fixed;
+	z-index: 10000000;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	align-items: center;
+	padding: 2px;
+
+	color: $light;
+	background: $dark;
+
+	text-align: center;
 }
