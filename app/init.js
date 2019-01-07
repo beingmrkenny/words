@@ -17,22 +17,10 @@ q('#AddWord button').addEventListener ('click', Word.save);
 
 var wordInput = q('#AddWord input');
 wordInput.addEventListener ('keyup', function (ev) {
-
 	if (ev.key == 'Escape') {
 		qid('AddWord').reset();
 	}
-
-	for (let wordLi of qq('li')) {
-		let word = wordLi.querySelector('the-word').textContent;
-		wordLi.classList.toggle('display-none', (!word.includes(this.value)));
-	}
-
-	for (let wordList of qq('word-list')) {
-		let allWords = qq('li', wordList),
-			hiddenWords = qq('.display-none', wordList);
-		wordList.classList.toggle('display-none', (allWords.length == hiddenWords.length));
-	}
-
+	WordList.hideyHideyShowyShowy(this.value);
 });
 
 for (let button of qq('button')) {

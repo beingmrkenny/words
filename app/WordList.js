@@ -86,6 +86,36 @@ class WordList {
 		}
 	}
 
+	static hideyHideyShowyShowy (needle = null) {
+
+		var substring, substrings;
+
+		if (needle && needle.includes(',')) {
+			substrings = new RegExp(needle.replace(/\s*,\s*/g, '|'));
+		} else if (typeof needle == 'string') {
+			substring = needle;
+		}
+
+		for (let wordLi of qq('li')) {
+			let word = wordLi.querySelector('the-word').textContent;
+			if (substrings) {
+				wordLi.classList.toggle('display-none', !substrings.test(word));
+			} else {
+				wordLi.classList.toggle('display-none', (substring ? (!word.includes(substring)) : false));
+			}
+		}
+
+		for (let wordList of qq('word-list')) {
+			if (needle) {
+				let allWords = qq('li', wordList).length,
+					hiddenWords = qq('.display-none', wordList).length;
+				wordList.classList.toggle('display-none', (allWords == hiddenWords));
+			} else {
+				wordList.classList.remove('display-none');
+			}
+		}
+	}
+
 	static edit (tagHeader) {
 		var list = tagHeader.closest('word-list'),
 			tag = tagHeader.textContent.trim();

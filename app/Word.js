@@ -189,7 +189,11 @@ class Word {
 		}
 	}
 
-	static create (word, newWord = false) {
+	static create (word) {
+
+		if (word.word.trim() == '') {
+			return false;
+		}
 
 		let wordLi = getTemplate('Word'),
 			theWord = wordLi.querySelector('the-word'),
@@ -200,7 +204,7 @@ class Word {
 		wordLi.dataset.hand = hands[Math.floor(Math.random() * 5)];
 		wordLi.dataset.fave = word.fave;
 
-		if (newWord) {
+		if (ovalue(word, 'newWord')) {
 			theWord.classList.add('new');
 		}
 
@@ -313,10 +317,11 @@ class Word {
 		);
 	}
 
+	static save (event) {
 
-	static save () {
+		event.preventDefault();
 
-		var words = Word.getNotDejala(q('#AddWord input').value.split(/[ ,]+/));
+		var words = Word.getNotDejala(q('#AddWord input').value.split(','));
 
 		if (words.length > 0) {
 
@@ -344,9 +349,11 @@ class Word {
 
 	static displayNouveaux (words) {
 
+		WordList.hideyHideyShowyShowy();
+
 		var firstWordList = q('word-list');
 
-		if (!firstWordList.querySelector('.list-header h2').textContent == 'INBOX') {
+		if (!q('h2', firstWordList).textContent == 'INBOX') {
 			firstWordList = getTemplate('WordList');
 			firstWordList.querySelector('h2').textContent = 'INBOX';
 			let main = q('main');
@@ -363,9 +370,12 @@ class Word {
 		for (let word of words) {
 			wordLi = Word.create({
 				word: word,
-				fave: "0"
-			}, true);
-			wordListUl.appendChild(wordLi);
+				fave: "0",
+				newWord: true
+			});
+			if (wordLi) {
+				wordListUl.appendChild(wordLi);
+			}
 		}
 
 		if (wordLi) {
