@@ -178,7 +178,7 @@ class Word {
 									word.parentNode.remove();
 								}
 							}
-							Word.checkedWordToolbar();
+							Toolbars.toggleCheckedWord();
 						},
 						() => {
 							console.log('bugger :(');
@@ -220,26 +220,9 @@ class Word {
 			this.classList.toggle('checked');
 
 			if (checkedCount == 0 && activeCount == 0) {
-				q('.checked').classList.add('active');
-				let wordBox = wordLi.getBoundingClientRect();
-				let toolbar = wordLi.querySelector('tool-bar');
-				let toolbarBox = toolbar.getBoundingClientRect();
-				let left = wordBox.x - 50;
-				toolbar.style.top = `${wordBox.y - 65}px`;
-				toolbar.style.left = `${left}px`;
-				if (left < 0) {
-					setTimeout(() => {
-						toolbar.style.left = '10px';
-					}, 0);
-				}
-				if (toolbarBox.right > window.innerWidth) {
-					setTimeout(() => {
-						toolbar.style.left = `${toolbarBox.left - (toolbarBox.right - window.innerWidth)}px`;
-					}, 0);
-				}
-				if (window.innerWidth < toolbarBox.width) {
-					document.body.appendChild(createElement(`<div class="cunt">get a wider screen you&nbsp;cunt</div>`));
-				}
+
+				Toolbars.openToolbar(wordLi);
+
 			} else {
 				for (let active of qq('li.active')) {
 					active.classList.remove('active');
@@ -249,19 +232,13 @@ class Word {
 				}
 			}
 
-			Word.checkedWordToolbar();
+			Toolbars.toggleCheckedWord();
 		});
 
 		return wordLi;
 	}
 
-	static checkedWordToolbar () {
-		var checkedToolbar = q('checked-word-tools'),
-			checked = qq('li.checked').length,
-			s = (checked == 1) ? '' : 's';
-		checkedToolbar.firstChild.textContent = `${checked} checked word${s}: `;
-		checkedToolbar.classList.toggle('active', (checked > 0));
-	}
+
 
 	static getNotDejala (wordsToAdd) {
 

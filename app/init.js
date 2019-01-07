@@ -60,7 +60,7 @@ function buttonClickHandler () {
 			for (let checked of qq('li.checked')) {
 				checked.classList.remove('checked');
 			}
-			Word.checkedWordToolbar();
+			Toolbars.toggleCheckedWord();
 			break;
 
 		case '✏️':
@@ -108,7 +108,10 @@ function displayWords (words) {
 			wordList.dataset.tag = tag.tag;
 			h2.textContent = tag.tag.toLowerCase();
 			h2.addEventListener('click', function () {
-				WordList.edit(this);
+				// TODO this should open the bastard
+				// WordList.edit(this);
+				Toolbars.openToolbar(this.parentNode);
+				// q('tool-bar', this.parentNode).classList.add('active');
 			});
 		}
 
