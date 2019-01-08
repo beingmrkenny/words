@@ -4,35 +4,41 @@ class Toolbars {
 
 		containingParent.classList.add('active');
 
-		let containingParentBox = containingParent.getBoundingClientRect();
-		let toolbar = q('tool-bar', containingParent);
+		var containingParentBox = containingParent.getBoundingClientRect(),
+			toolbar = q('tool-bar', containingParent),
+			toolbarBox = toolbar.getBoundingClientRect(),
+			leftOffset = 50;
 
-		let dialog = toolbar.closest('dialog');
+		if (window.innerWidth < toolbarBox.width) {
+			document.body.appendChild(createElement(`<div class="cunt">get a wider screen, cunt</div>`));
+			return;
+		}
+
 		if (containingParent.tagName == 'WORD-LIST') {
+			let dialog = toolbar.closest('dialog');
+			leftOffset = 0;
 			dialog.showModal();
 			dialog.addEventListener('click', function () {
 				this.close();
 				containingParent.classList.remove('active');
 			});
+			q(':focus').blur();
 		}
 
-		let toolbarBox = toolbar.getBoundingClientRect();
-		let left = containingParentBox.x - 50;
+		var left = containingParentBox.x - leftOffset;
 		toolbar.style.top = `${containingParentBox.y - 65}px`;
 		toolbar.style.left = `${left}px`;
+
 		if (left < 0) {
 			setTimeout(() => {
 				toolbar.style.left = '10px';
 			}, 0);
-		}
-		if (toolbarBox.right > window.innerWidth) {
+		} else if (toolbarBox.right > window.innerWidth) {
 			setTimeout(() => {
 				toolbar.style.left = `${toolbarBox.left - (toolbarBox.right - window.innerWidth)}px`;
 			}, 0);
 		}
-		if (window.innerWidth < toolbarBox.width) {
-			document.body.appendChild(createElement(`<div class="cunt">get a wider screen, ye&nbsp;cunt</div>`));
-		}
+
 	}
 
 	static toggleCheckedWord () {

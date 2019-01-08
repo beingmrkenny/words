@@ -42,7 +42,7 @@ class System {
 				}
 				break;
 
-			case '☝️':
+			case '🏳':
 				for (let active of qq('li.active')) {
 					active.classList.remove('active');
 				}
