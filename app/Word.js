@@ -168,9 +168,9 @@ class Word {
 	static destroy(words) {
 		if (words.length > 0) {
 			let wordsString = (words.length == 1) ? words : words.join(', ');
-			(new Dialog()).message(`Are you sure you want to delete ${wordsString}?`,
+			(new Dialog()).message(`Are ye sure ye want to make delet all these word: ${wordsString}?`,
 				() => {
-					eddyt('delete',
+					eddyt('delete-words',
 						{ words: words },
 						(data) => {
 							for (let word of qq('the-word')) {
@@ -209,36 +209,35 @@ class Word {
 		}
 
 		for (let button of qq('button', wordLi)) {
-			button.addEventListener('click', buttonClickHandler);
+			button.addEventListener('click', System.buttonClickHandler);
 		}
 
-		wordLi.addEventListener('click', function () {
-
-			var checkedCount = qq('.checked').length,
-				activeCount = qq('li.active').length;
-
-			this.classList.toggle('checked');
-
-			if (checkedCount == 0 && activeCount == 0) {
-
-				Toolbars.openToolbar(wordLi);
-
-			} else {
-				for (let active of qq('li.active')) {
-					active.classList.remove('active');
-				}
-				for (let styled of qq('tool-bar[style]')) {
-					styled.style = null;
-				}
-			}
-
-			Toolbars.toggleCheckedWord();
-		});
+		wordLi.addEventListener('click', Word.clickHandler);
 
 		return wordLi;
 	}
 
+	static clickHandler () {
+		var checkedCount = qq('.checked').length,
+			activeCount = qq('li.active').length;
 
+		this.classList.toggle('checked');
+
+		if (checkedCount == 0 && activeCount == 0) {
+
+			Toolbars.openToolbar(this);
+
+		} else {
+			for (let active of qq('li.active')) {
+				active.classList.remove('active');
+			}
+			for (let styled of qq('tool-bar[style]')) {
+				styled.style = null;
+			}
+		}
+
+		Toolbars.toggleCheckedWord();
+	}
 
 	static getNotDejala (wordsToAdd) {
 

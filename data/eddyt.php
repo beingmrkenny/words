@@ -33,8 +33,12 @@ switch ($_POST['action']) {
 		}
 		break;
 
-	case 'delete':
+	case 'delete-words':
 		deleteWords ($_POST['words']);
+		break;
+
+	case 'delete-tag':
+		deleteTag ($_POST['tag']);
 		break;
 
 }

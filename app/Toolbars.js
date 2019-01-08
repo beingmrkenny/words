@@ -7,6 +7,15 @@ class Toolbars {
 		let containingParentBox = containingParent.getBoundingClientRect();
 		let toolbar = q('tool-bar', containingParent);
 
+		let dialog = toolbar.closest('dialog');
+		if (containingParent.tagName == 'WORD-LIST') {
+			dialog.showModal();
+			dialog.addEventListener('click', function () {
+				this.close();
+				containingParent.classList.remove('active');
+			});
+		}
+
 		let toolbarBox = toolbar.getBoundingClientRect();
 		let left = containingParentBox.x - 50;
 		toolbar.style.top = `${containingParentBox.y - 65}px`;
@@ -22,7 +31,7 @@ class Toolbars {
 			}, 0);
 		}
 		if (window.innerWidth < toolbarBox.width) {
-			document.body.appendChild(createElement(`<div class="cunt">get a wider screen you&nbsp;cunt</div>`));
+			document.body.appendChild(createElement(`<div class="cunt">get a wider screen, ye&nbsp;cunt</div>`));
 		}
 	}
 

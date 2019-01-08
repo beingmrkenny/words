@@ -1,5 +1,56 @@
 class WordList {
 
+	static displayWords (words) {
+
+		words.sort((a, b) => {
+			if (!a.tag || !b.tag) {
+				return -1;
+			}
+			a = a.tag.toUpperCase();
+			b = b.tag.toUpperCase();
+			return (a == b) ? 0 : (a > b) ? 1 : -1;
+		});
+
+		let main = document.querySelector('main');
+
+		for (let tag of words) {
+
+			let wordList = getTemplate('WordList'),
+				wordListUl = wordList.querySelector('ul'),
+				h2 = wordList.querySelector('h2');
+
+			if (tag.tag === null) {
+				wordList.dataset.tag = 'INBOX';
+				h2.textContent = 'INBOX';
+			} else {
+				wordList.dataset.tag = tag.tag;
+				h2.textContent = tag.tag.toLowerCase();
+				h2.addEventListener('click', function () {
+					Toolbars.openToolbar(this.parentNode);
+				});
+			}
+
+			for (let button of qq('button', wordList)) {
+				button.addEventListener('click', System.buttonClickHandler);
+			}
+
+			if (tag.words) {
+				tag.words = shuffle(tag.words);
+				for (let word of tag.words) {
+					wordListUl.appendChild(Word.create(word));
+				}
+			}
+
+			if (tag.tag === null && main.firstElementChild) {
+				main.insertBefore(wordList, main.firstElementChild);
+			} else {
+				main.appendChild(wordList);
+			}
+
+		}
+
+	}
+
 	static sort (list, by = null) {
 
 		var existingSort = ovalue(list, 'dataset', 'sortBy'),
@@ -26,20 +77,16 @@ class WordList {
 	static separateFaves (list) {
 		var ul = list.querySelector('ul');
 		for (let fave of qq('[data-fave="1"]', ul)) {
-
 			if (ul.firstElementChild) {
-
 				ul.insertBefore(
 					fave,
 					(ul.firstElementChild.dataset.fave == 1)
 						? q('[data-fave="0"]', ul)
 						: ul.firstElementChild
 				);
-
 			} else {
 				ul.appendChild(fave);
 			}
-
 		}
 		q('main').dataset.favesSeparated = '1';
 	}
@@ -116,9 +163,8 @@ class WordList {
 		}
 	}
 
-	static edit (tagHeader) {
-		var list = tagHeader.closest('word-list'),
-			tag = tagHeader.textContent.trim();
+	static edit (list) {
+		var tag = q('h2', list).textContent.trim();
 		(new Dialog()).form(
 			'Edit tag',
 			'EditItemForm',
@@ -138,6 +184,35 @@ class WordList {
 					},
 					() => {
 						console.log('pistle :(');
+					}
+				);
+			}
+		);
+	}
+
+	static destroy (tag) {
+		(new Dialog()).message(`Are ye sure ye want to make delet of the tag of “${tag}”? Only the tag shall be made delet: its words shall be made to remain.`,
+			() => {
+				eddyt('delete-tag',
+					{ tag: tag },
+					(data) => {
+						for (let wordList of qq('word-list')) {
+							if (q('h2', wordList).textContent == tag) {
+								let inbox = q('ul', System.getInbox());
+								for (let theWord of qq('the-word', wordList)) {
+									let word = theWord.textContent,
+										wordLi = theWord.parentNode.parentNode.removeChild(theWord.parentNode);
+									if (!q(`[data-word="${word}"]`)) {
+										inbox.appendChild(wordLi);
+									}
+								}
+								wordList.remove();
+								break;
+							}
+						}
+					},
+					() => {
+						console.log('wee wee cows :(');
 					}
 				);
 			}

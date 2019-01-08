@@ -37,7 +37,6 @@ function deleteWords ($words) {
 			sendAsJSON($words);
 		}
 	}
-
 }
 
 function addWords ($words) {
@@ -68,6 +67,7 @@ function editTag ($tag, $newTag) {
 function deleteTag ($tag) {
 	$tag = escape($tag);
 	query("DELETE FROM tags WHERE tag = '$tag'");
+	sendAsJSON(['tag' => $tag]);
 }
 
 function wordTagHelper ($tags, $words, $insert) {

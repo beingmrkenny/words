@@ -26,7 +26,7 @@ class Dialog {
 		this.dialog.querySelector('form input').addEventListener ('keyup', function (ev) {
 			if (ev.key == 'Enter') {
 				ok();
-				q('dialog').remove();
+				this.dialog.remove();
 			}
 		});
 		this.dialog.querySelector('form').addEventListener ('submit', function (ev) {
@@ -35,12 +35,12 @@ class Dialog {
 	}
 
 	okCancel (ok) {
-		qid('OK').addEventListener('click', () => {
+		q('#OK', this.dialog).addEventListener('click', () => {
 			ok();
-			q('dialog').remove();
+			this.dialog.remove();
 		});
-		qid('Cancel').addEventListener('click', () => {
-			q('dialog').remove();
+		q('#Cancel', this.dialog).addEventListener('click', () => {
+			this.dialog.remove();
 		});
 	}
 
