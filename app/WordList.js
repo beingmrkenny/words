@@ -26,7 +26,7 @@ class WordList {
 				wordList.dataset.tag = tag.tag;
 				h2.textContent = tag.tag.toLowerCase();
 				h2.addEventListener('click', function () {
-					Toolbars.openToolbar(this.parentNode);
+					System.openToolbar(this.parentNode);
 				});
 			}
 

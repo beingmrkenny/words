@@ -108,18 +108,17 @@ class Word {
 			{ words : words, add : add, remove: remove },
 			(data) => {
 
-				let inbox = q('word-list[data-tag="INBOX"] ul');
+				let inbox = q('ul', System.getInbox());
 
 				for (let word in data) {
 
 					for (let tag of data[word].add) {
-						let found = q(`[data-word="${word}"]`, q(`word-list[data-tag="${tag}"]`));
+						let wordList = q(`word-list[data-tag="${tag}"]`);
+						let found = q(`[data-word="${word}"]`, wordList);
 						if (!found) {
-							q(`word-list[data-tag="${tag}"] ul`).appendChild(Word.create(word));
+							q('ul', wordList).appendChild(Word.create({word:word}));
 						}
-
-						let lements = qq(`[data-word="${word}"]`, inbox);
-						removeElements(lements);
+						removeElements(qq(`[data-word="${word}"]`, inbox));
 					}
 
 					for (let tag of data[word].remove) {
@@ -130,7 +129,6 @@ class Word {
 							}
 							removeElements(wordElement);
 						}
-
 						if (!q(`[data-word="${word}"]`, inbox)) {
 							inbox.appendChild(Word.create({ word: word, fave : isFave }));
 						}
@@ -144,6 +142,8 @@ class Word {
 						WordList.separateFaves(list);
 					}
 				}
+
+				// TODO uncheck those little bitches
 
 			}
 		);
@@ -178,7 +178,7 @@ class Word {
 									word.parentNode.remove();
 								}
 							}
-							Toolbars.toggleCheckedWord();
+							System.toggleCheckedWordToolbar();
 						},
 						() => {
 							console.log('bugger :(');
@@ -225,7 +225,7 @@ class Word {
 
 		if (checkedCount == 0 && activeCount == 0) {
 
-			Toolbars.openToolbar(this);
+			System.openToolbar(this);
 
 		} else {
 			for (let active of qq('li.active')) {
@@ -236,7 +236,7 @@ class Word {
 			}
 		}
 
-		Toolbars.toggleCheckedWord();
+		System.toggleCheckedWordToolbar();
 	}
 
 	static getNotDejala (wordsToAdd) {
