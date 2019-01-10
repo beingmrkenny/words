@@ -74,7 +74,7 @@ word-list {
 
 		border-radius: 3px;
 
-		transition: left .25s ease-out;
+		transition: left 0.25s ease-out;
 		button {
 			width: auto;
 			height: auto;
@@ -87,7 +87,6 @@ word-list {
 			font-size: 30px;
 		}
 	}
-
 }
 
 .active > dialog tool-bar {
@@ -171,6 +170,8 @@ the-word {
 	left: 0;
 	right: 0;
 	align-items: center;
+	justify-content: center;
+
 	padding: 2px;
 
 	color: $light;
