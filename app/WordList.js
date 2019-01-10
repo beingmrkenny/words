@@ -88,6 +88,7 @@ class WordList {
 				ul.appendChild(fave);
 			}
 		}
+		ul.scrollTop = 0;
 		q('main').dataset.favesSeparated = '1';
 	}
 
