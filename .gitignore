@@ -16,3 +16,5 @@ serve/
 # System Files
 .DS_Store
 Thumbs.db
+
+node_modules/

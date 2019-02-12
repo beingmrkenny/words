@@ -1,0 +1,30 @@
+{
+ "name": "words",
+ "version": "1.0.0",
+ "description": "a words thing",
+ "main": "gulpfile.js",
+ "dependencies": {
+  "fs-extra": "^7.0.1",
+  "gulp": "^4.0.0",
+  "gulp-closure-compiler": "^0.4.0",
+  "gulp-handlebars-all": "^0.1.1",
+  "gulp-rename": "^1.4.0",
+  "gulp-sass": "^4.0.2",
+  "gulp-shell": "^0.6.5",
+  "node-notify": "^1.0.0",
+  "node-sass": "^4.11.0"
+ },
+ "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1"
+ },
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/beingmrkenny/wirts.git"
+ },
+ "author": "Mark Kenny",
+ "license": "MIT",
+ "bugs": {
+  "url": "https://github.com/beingmrkenny/wirts/issues"
+ },
+ "homepage": "https://github.com/beingmrkenny/wirts#readme"
+}

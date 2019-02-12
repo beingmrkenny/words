@@ -1,6 +1,10 @@
 # words
 A little web app to keep track of your favourite words
 
+## no one but me will ever run this app but in case you do
+
+This is all done in gulp, so install that. Then read the gulpfile to find out about all of the things
+
 ## Setting up the database
 
 1. cd to the `data/db` directory
@@ -14,12 +18,3 @@ To delete everything from the database, run `sqlite3 words.db < delet.sql`
 1. cd to the `data` directory
 2. run `php -f readCSV.php`
 3. I think that's it
-
-## config.json
-
-	{
-		"wordsDir" : "/Path/to/words",
-		"refreshOnWatch" : true,
-		"scssCompressionStyle" : "expanded",
-		"googleCompiler" : "/Path/to/closure-compiler.jar"
-	}
