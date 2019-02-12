@@ -12,12 +12,12 @@ foreach ($csvFiles as $csvFile) {
 	preg_match('/([a-z0-9 ]+)-([a-z0-9 ]+)\.csv/i', $csvFile, $matches);
 
 	if ($matches[1] == 'categories') {
-        // do something with these later
+		// do something with these later
 		break;
-	} else if ($matches[1] == 'Inbox') {
+	} else if ($matches[1] == 'INBOX') {
 		$tag = null;
 	} else {
-		$tag = $matches[2];
+		$tag = strtolower($matches[2]);
 	}
 
 	$csv = array_map('str_getcsv', file($csvFile));
