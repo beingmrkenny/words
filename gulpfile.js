@@ -1,8 +1,6 @@
 const { src, dest, series, parallel, watch } = require('gulp');
 const rename = require('gulp-rename');
 
-// gulp-rename, gulp-sass, node-sass, node-notify, gulp-shell
-
 function compileAllCSS (cb) {
 
 	compileCSS ({
@@ -41,13 +39,16 @@ function compileCSS (parameters) {
 
 function compileJS () {
 	const closureCompiler = require('gulp-closure-compiler');
+	const sourcemaps = require('gulp-sourcemaps');
 	return src('app/*.js')
+		.pipe(sourcemaps.init())
 		.pipe(closureCompiler({
-			compilerPath: '/Users/beingmrkenny/_overflow/java/closure-compiler.jar',
+			compilerPath: '/Users/mkenny/java/closure-compiler.jar',
 			compilation_level: 'ADVANCED_OPTIMIZATIONS',
 			jscomp_off: 'checkVars',
 			fileName: 'js.js'
 		}))
+		.pipe(sourcemaps.write())
 		.pipe(dest('serve'));
 }
 
@@ -84,4 +85,4 @@ async function refresh () {
 
 exports.css = compileAllCSS;
 exports.js = compileJS;
-exports.serve = parallel(compileAllCSS, compileJS, serve);
+exports.default = parallel(compileAllCSS, compileJS, serve);
