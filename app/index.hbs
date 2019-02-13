@@ -4,7 +4,6 @@
 <head>
 	<meta charset="utf-8">
 	<title>Words</title>
-	<base href="/">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link rel="stylesheet" href="words.css?refresh={{refresh}}">
@@ -22,7 +21,10 @@
 		</tool-bar>
 
 		<form id="AddWord">
-			<input type="text" name="words" size="30">
+			<input type="text" name="words" size="30"
+				autocapitalize="off"
+				autocomplete="off"
+				autocorrect="off">
 			<button>+</button>
 		</form>
 
