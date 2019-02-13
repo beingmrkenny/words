@@ -271,7 +271,7 @@ class Word {
 
 		if (messageTextWordDelements.length > 0) {
 			q('header').appendChild(createElement(`<deja-la><span>déjà là: ${messageTextWordDelements.join()}</span></deja-la>`));
-			setTimeout( () => { removeElement(q('deja-la')); }, 10000);
+			setTimeout( () => { removeElements(q('deja-la')); }, 10000);
 		}
 
 		return wordsToAdd;

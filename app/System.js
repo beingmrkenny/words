@@ -8,9 +8,9 @@ class System {
 			inbox.querySelector('h2').textContent = 'INBOX';
 			inbox.dataset.tag = 'INBOX';
 			if (main.firstElementChild) {
-				main.insertBefore(wordList, main.firstElementChild);
+				main.insertBefore(inbox, main.firstElementChild);
 			} else {
-				main.appendChild(wordList);
+				main.appendChild(inbox);
 			}
 		}
 		return inbox;

@@ -41,16 +41,15 @@ function compileCSS (parameters) {
 // # --warning_level QUIET --compilation_level ADVANCED_OPTIMIZATIONS --jscomp_off=checkVars;
 
 function compileJS () {
-	const closureCompiler = require('gulp-closure-compiler');
+	const closureCompiler = require('google-closure-compiler').gulp();
 
 	return src('app/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(closureCompiler({
-			compilerPath: '/Users/mkenny/java/closure-compiler.jar',
-			compilationLevel: 'ADVANCED_OPTIMIZATIONS',
-			jscompOff: 'checkVars',
-			fileName: 'js.js',
-			createSourceMap: true
+			compilation_level: 'ADVANCED_OPTIMIZATIONS',
+			warning_level: 'QUIET',
+			js_output_file: 'js.js',
+			create_source_map: 'js.map'
 		}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(dest('serve'));
