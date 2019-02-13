@@ -11,10 +11,7 @@ foreach ($csvFiles as $csvFile) {
 	$matches = array();
 	preg_match('/([a-z0-9 ]+)-([a-z0-9 ]+)\.csv/i', $csvFile, $matches);
 
-	if ($matches[1] == 'categories') {
-		// do something with these later
-		break;
-	} else if ($matches[1] == 'INBOX') {
+	if ($matches[2] == 'INBOX') {
 		$tag = null;
 	} else {
 		$tag = strtolower($matches[2]);
@@ -24,11 +21,12 @@ foreach ($csvFiles as $csvFile) {
 	$words = array();
 	foreach ($csv as $wordArray) {
 		if ($wordArray[0]) {
-			$words[] = ($wordArray[0] == 'African') ? $wordArray[0] : strtolower($wordArray[0]);
+			$words[] = mb_convert_encoding($wordArray[0], 'UTF-8', 'UTF-8');
 		}
 	}
 
 	addWords($words);
+
 	if ($tag) {
 		addTag($tag);
 		tagWords([$tag], $words);
