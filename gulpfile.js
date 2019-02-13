@@ -1,11 +1,12 @@
 const { src, dest, series, parallel, watch } = require('gulp');
 const rename = require('gulp-rename');
+const sourcemaps = require('gulp-sourcemaps');
 
 function compileAllCSS (cb) {
 
 	compileCSS ({
-	   input: 'scss/main.scss',
-	   output: 'words.css'
+		input: 'scss/main.scss',
+		output: 'words.css'
 	});
 
 	if (typeof cb == 'function') {
@@ -29,9 +30,11 @@ function compileCSS (parameters) {
 		options.loadPath = parameters.loadPath;
 	}
 	return src(parameters.input)
-	  .pipe(sass(options).on('error', sass.logError))
-	  .pipe(rename(parameters.output))
-	  .pipe(dest('serve'));
+		.pipe(sourcemaps.init())
+		.pipe(sass(options).on('error', sass.logError))
+		.pipe(rename(parameters.output))
+		.pipe(sourcemaps.write('.'))
+		.pipe(dest('serve'));
 }
 
 // java -jar $googleCompiler --js $input --js_output_file $output --create_source_map $mapfile --warning_level DEFAULT --language_in ECMASCRIPT6_STRICT --language_out ECMASCRIPT5_STRICT;
@@ -39,16 +42,17 @@ function compileCSS (parameters) {
 
 function compileJS () {
 	const closureCompiler = require('gulp-closure-compiler');
-	const sourcemaps = require('gulp-sourcemaps');
+
 	return src('app/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(closureCompiler({
 			compilerPath: '/Users/mkenny/java/closure-compiler.jar',
-			compilation_level: 'ADVANCED_OPTIMIZATIONS',
-			jscomp_off: 'checkVars',
-			fileName: 'js.js'
+			compilationLevel: 'ADVANCED_OPTIMIZATIONS',
+			jscompOff: 'checkVars',
+			fileName: 'js.js',
+			createSourceMap: true
 		}))
-		.pipe(sourcemaps.write())
+		.pipe(sourcemaps.write('.'))
 		.pipe(dest('serve'));
 }
 
@@ -69,19 +73,19 @@ function serve () {
 		.pipe(dest('serve'));
 }
 
-async function refresh () {
-
-	const notify = require('node-notify');
-	const shell = require('gulp-shell');
-
-	watch(['scss/*.scss'], function() {
-		compileAllCSS();
-		notify('Done');
-		return src('*.js', {read: false})
-			.pipe(shell([`osascript ${__dirname}/bruesers.scpt`]));
-	});
-
-}
+// async function refresh () {
+//
+// 	const notify = require('node-notify');
+// 	const shell = require('gulp-shell');
+//
+// 	watch(['scss/*.scss'], function() {
+// 		compileAllCSS();
+// 		notify('Done');
+// 		return src('*.js', {read: false})
+// 			.pipe(shell([`osascript ${__dirname}/bruesers.scpt`]));
+// 	});
+//
+// }
 
 exports.css = compileAllCSS;
 exports.js = compileJS;
