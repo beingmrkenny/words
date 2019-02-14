@@ -8,4 +8,4 @@ sqlite3 words.db < cret.sql;
 
 cd '../';
 
-php -f 'readCSV.php';
+php -f '../readCSV.php';

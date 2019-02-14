@@ -1,6 +1,7 @@
 const { src, dest, series, parallel, watch } = require('gulp');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
+const fs = require('fs-extra');
 
 function compileAllCSS (cb) {
 
@@ -55,9 +56,8 @@ function compileJS () {
 		.pipe(dest('serve'));
 }
 
-function serve () {
+function compile () {
 
-	const fs = require('fs-extra');
 	const hbsAll = require('gulp-handlebars-all');
 
 	fs.mkdirp('serve');
@@ -70,6 +70,24 @@ function serve () {
 		}))
 		.pipe(rename('index.html'))
 		.pipe(dest('serve'));
+}
+
+function release (cb) {
+	var folder = process.env.HOME + '/Desktop/words';
+	fs.copySync('serve/', folder);
+	var filesToDelet = [
+		'readCSV.php',
+		'readJSON.php',
+		'db/words.db',
+		'db/cret.sql',
+		'db/delet.sql',
+		'db/fill.sql',
+		'db/setup.sh'
+	];
+	for (let file of filesToDelet) {
+		fs.removeSync(folder + '/data/' + file);
+	}
+	cb();
 }
 
 // async function refresh () {
@@ -88,4 +106,5 @@ function serve () {
 
 exports.css = compileAllCSS;
 exports.js = compileJS;
-exports.default = parallel(compileAllCSS, compileJS, serve);
+exports.default = parallel(compileAllCSS, compileJS, compile);
+exports.release = series(parallel(compileAllCSS, compileJS, compile), release);
