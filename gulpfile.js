@@ -78,7 +78,6 @@ function release (cb) {
 	var filesToDelet = [
 		'readCSV.php',
 		'readJSON.php',
-		'db/words.db',
 		'db/cret.sql',
 		'db/delet.sql',
 		'db/fill.sql',
@@ -90,21 +89,44 @@ function release (cb) {
 	cb();
 }
 
-// async function refresh () {
-//
-// 	const notify = require('node-notify');
-// 	const shell = require('gulp-shell');
-//
-// 	watch(['scss/*.scss'], function() {
-// 		compileAllCSS();
-// 		notify('Done');
-// 		return src('*.js', {read: false})
-// 			.pipe(shell([`osascript ${__dirname}/bruesers.scpt`]));
-// 	});
-//
-// }
+function serve (cb) {
+	var folder = process.env.HOME + '/htdocs/words';
+	fs.copySync('serve/', folder);
+	var filesToDelet = [
+		'readCSV.php',
+		'readJSON.php',
+		'db/cret.sql',
+		'db/delet.sql',
+		'db/fill.sql',
+		'db/setup.sh'
+	];
+	for (let file of filesToDelet) {
+		fs.removeSync(folder + '/data/' + file);
+	}
+	return src('*.js', {read: false})
+		.pipe(shell([`osascript ${__dirname}/bruesers.scpt`]));
+	if (typeof cb == 'function') {
+		cb();
+	}
+}
+
+async function refresh () {
+
+	const notify = require('node-notify');
+	const shell = require('gulp-shell');
+
+	watch(['scss/*.scss', 'app/*.js'], function(cb) {
+		serve(cb);
+		notify('Done');
+		return src('*.js', {read: false})
+			.pipe(shell([`osascript ${__dirname}/bruesers.scpt`]));
+	});
+
+}
 
 exports.css = compileAllCSS;
 exports.js = compileJS;
 exports.default = parallel(compileAllCSS, compileJS, compile);
+exports.refresh = refresh;
+exports.serve = serve;
 exports.release = series(parallel(compileAllCSS, compileJS, compile), release);

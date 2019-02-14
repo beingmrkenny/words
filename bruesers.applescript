@@ -1,3 +1,5 @@
+-- osacompile -o bruesers.scpt bruesers.applescript
+
 on run argv
 
 	tell application "Google Chrome"

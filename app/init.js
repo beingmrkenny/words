@@ -13,9 +13,7 @@ xhr.addEventListener("error", function () {
 xhr.open("GET", "/words/data/ghent.php");
 xhr.send();
 
-
 q('#AddWord button').addEventListener ('click', Word.save);
-
 
 var wordInput = q('#AddWord input');
 wordInput.addEventListener ('keyup', function (ev) {
@@ -24,7 +22,6 @@ wordInput.addEventListener ('keyup', function (ev) {
 	}
 	WordList.hideyHideyShowyShowy(this.value);
 });
-
 
 for (let button of qq('button')) {
 	button.addEventListener('click', System.buttonClickHandler);
