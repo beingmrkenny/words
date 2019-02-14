@@ -3,45 +3,30 @@ const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 const fs = require('fs-extra');
 
-function compileAllCSS (cb) {
 
-	compileCSS ({
-		input: 'scss/main.scss',
-		output: 'words.css'
-	});
-
-	if (typeof cb == 'function') {
-		cb();
-	}
-
-}
-
-function compileCSS (parameters) {
+function compileCSS () {
 
 	const sass = require('gulp-sass');
 	sass.compiler = require('node-sass');
 
 	var options = {
-		// sourcemap : true,
 		outputStyle : 'expanded',
-		loadPath : parameters.loadPath,
 		cache : '/tmp/sass-cache'
 	};
-	if (parameters.loadPath) {
-		options.loadPath = parameters.loadPath;
-	}
-	return src(parameters.input)
+
+	return src('scss/main.scss')
 		.pipe(sourcemaps.init())
 		.pipe(sass(options).on('error', sass.logError))
-		.pipe(rename(parameters.output))
+		.pipe(rename('words.css'))
 		.pipe(sourcemaps.write('.'))
 		.pipe(dest('serve'));
 }
 
-// java -jar $googleCompiler --js $input --js_output_file $output --create_source_map $mapfile --warning_level DEFAULT --language_in ECMASCRIPT6_STRICT --language_out ECMASCRIPT5_STRICT;
-// # --warning_level QUIET --compilation_level ADVANCED_OPTIMIZATIONS --jscomp_off=checkVars;
-
 function compileJS () {
+
+	// java -jar $googleCompiler --js $input --js_output_file $output --create_source_map $mapfile --warning_level DEFAULT --language_in ECMASCRIPT6_STRICT --language_out ECMASCRIPT5_STRICT;
+	// # --warning_level QUIET --compilation_level ADVANCED_OPTIMIZATIONS --jscomp_off=checkVars;
+
 	const closureCompiler = require('google-closure-compiler').gulp();
 
 	return src('app/*.js')
@@ -56,13 +41,9 @@ function compileJS () {
 		.pipe(dest('serve'));
 }
 
-function compile () {
+function compileHTML () {
 
 	const hbsAll = require('gulp-handlebars-all');
-
-	fs.mkdirp('serve');
-	fs.copy('favicon.ico', 'serve/favicon.ico');
-	fs.copy('data', 'serve/data');
 
 	return src('app/index.hbs')
 		.pipe(hbsAll('html', {
@@ -72,26 +53,18 @@ function compile () {
 		.pipe(dest('serve'));
 }
 
-function release (cb) {
-	var folder = process.env.HOME + '/Desktop/words';
-	fs.copySync('serve/', folder);
-	var filesToDelet = [
-		'readCSV.php',
-		'readJSON.php',
-		'db/cret.sql',
-		'db/delet.sql',
-		'db/fill.sql',
-		'db/setup.sh'
-	];
-	for (let file of filesToDelet) {
-		fs.removeSync(folder + '/data/' + file);
-	}
-	cb();
+function compileAppleScript () {
+	const shell = require('gulp-shell');
+	return src('.', {read: false})
+		.pipe(shell([`osacompile -o ${__dirname}/chrome.scpt ${__dirname}/chrome.applescript`]));
 }
 
-function serve (cb) {
-	var folder = process.env.HOME + '/htdocs/words';
-	fs.copySync('serve/', folder);
+
+function prepareServeDirectory (cb) {
+	fs.removeSync('serve');
+	fs.mkdirp('serve');
+	fs.copy('app/favicon.ico', 'serve/favicon.ico');
+	fs.copySync('data', 'serve/data');
 	var filesToDelet = [
 		'readCSV.php',
 		'readJSON.php',
@@ -101,32 +74,69 @@ function serve (cb) {
 		'db/setup.sh'
 	];
 	for (let file of filesToDelet) {
-		fs.removeSync(folder + '/data/' + file);
+		fs.removeSync(__dirname+'/serve/data/' + file);
 	}
-	return src('*.js', {read: false})
-		.pipe(shell([`osascript ${__dirname}/bruesers.scpt`]));
 	if (typeof cb == 'function') {
 		cb();
 	}
 }
 
-async function refresh () {
-
-	const notify = require('node-notify');
-	const shell = require('gulp-shell');
-
-	watch(['scss/*.scss', 'app/*.js'], function(cb) {
-		serve(cb);
-		notify('Done');
-		return src('*.js', {read: false})
-			.pipe(shell([`osascript ${__dirname}/bruesers.scpt`]));
-	});
-
+function copyServeDirectoryToHTDocsFolder (cb) {
+	fs.copySync('serve/', process.env.HOME+'/htdocs/words');
+	cb();
 }
 
-exports.css = compileAllCSS;
+function copyServeDirectoryToReleaseFolder (cb) {
+	var filesToDelet = [
+		'readCSV.php',
+		'readJSON.php',
+		'db/words.db',
+		'db/cret.sql',
+		'db/delet.sql',
+		'db/fill.sql',
+		'db/setup.sh'
+	];
+	var releaseFolder = process.env.HOME + '/Desktop/words';
+	fs.copySync('serve/', releaseFolder);
+	for (let file of filesToDelet) {
+		fs.removeSync(releaseFolder + '/data/' + file);
+	}
+	cb();
+}
+
+
+function refreshBrowser () {
+	const shell = require('gulp-shell');
+	return src('.', {read: false})
+		.pipe(shell([`osascript ${__dirname}/chrome.scpt`]));
+}
+
+function notifyDone () {
+	const notify = require('gulp-notify');
+	return src('*.js', {read: false})
+		.pipe(notify('Done'));
+}
+
+
+function wordswatch () {
+	prepareServeDirectory();
+	watch(['scss/*.scss', 'app/*.*'], series(
+		compileCSS,
+		compileJS,
+		compileHTML,
+		copyServeDirectoryToHTDocsFolder,
+		refreshBrowser,
+		notifyDone
+	));
+}
+
+
+exports.css = compileCSS;
 exports.js = compileJS;
-exports.default = parallel(compileAllCSS, compileJS, compile);
-exports.refresh = refresh;
-exports.serve = serve;
-exports.release = series(parallel(compileAllCSS, compileJS, compile), release);
+exports.html = compileHTML;
+exports.applescript = compileAppleScript;
+
+exports.default = series(prepareServeDirectory, parallel(compileCSS, compileJS, compileHTML) );
+exports.watch = wordswatch;
+
+exports.release = series(prepareServeDirectory, parallel(compileCSS, compileJS, compileHTML), copyServeDirectoryToReleaseFolder);

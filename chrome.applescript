@@ -1,4 +1,4 @@
--- osacompile -o bruesers.scpt bruesers.applescript
+-- osacompile -o chrome.scpt chrome.applescript
 
 on run argv
 
