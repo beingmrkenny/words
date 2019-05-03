@@ -12,6 +12,7 @@ serve/
 
 # misc
 /.sass-cache
+package-lock.json
 
 # System Files
 .DS_Store
