@@ -32,7 +32,7 @@ function compileJS () {
 	return src('app/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(closureCompiler({
-			compilation_level: 'ADVANCED_OPTIMIZATIONS',
+			compilation_level: 'SIMPLE_OPTIMIZATIONS',
 			warning_level: 'QUIET',
 			js_output_file: 'js.js',
 			create_source_map: 'js.map'
@@ -81,11 +81,6 @@ function prepareServeDirectory (cb) {
 	}
 }
 
-function copyServeDirectoryToHTDocsFolder (cb) {
-	fs.copySync('serve/', process.env.HOME+'/htdocs/words');
-	cb();
-}
-
 function copyServeDirectoryToReleaseFolder (cb) {
 	var filesToDelet = [
 		'readCSV.php',
@@ -124,7 +119,6 @@ function wordswatch () {
 		compileCSS,
 		compileJS,
 		compileHTML,
-		copyServeDirectoryToHTDocsFolder,
 		refreshBrowser,
 		notifyDone
 	));
@@ -137,6 +131,6 @@ exports.html = compileHTML;
 exports.applescript = compileAppleScript;
 
 exports.default = series(prepareServeDirectory, parallel(compileCSS, compileJS, compileHTML) );
-exports.watch = wordswatch;
+exports.watch = series(prepareServeDirectory, compileCSS, compileJS, compileHTML, wordswatch);
 
 exports.release = series(prepareServeDirectory, parallel(compileCSS, compileJS, compileHTML), copyServeDirectoryToReleaseFolder);

@@ -4,17 +4,17 @@
  "description": "a words thing",
  "main": "gulpfile.js",
  "dependencies": {
-  "fs-extra": "^7.0.1",
-  "google-closure-compiler": "^20190121.0.0",
-  "gulp": "^4.0.0",
-  "gulp-handlebars-all": "^0.1.1",
-  "gulp-notify": "^3.2.0",
-  "gulp-rename": "^1.4.0",
-  "gulp-sass": "^4.0.2",
-  "gulp-shell": "^0.6.5",
-  "gulp-sourcemaps": "^2.6.4",
-  "node-notify": "^1.0.0",
-  "node-sass": "^4.12.0"
+  "fs-extra": "",
+  "google-closure-compiler": "",
+  "gulp": "",
+  "gulp-handlebars-all": "",
+  "gulp-notify": "",
+  "gulp-rename": "",
+  "gulp-sass": "",
+  "gulp-shell": "",
+  "gulp-sourcemaps": "",
+  "node-notify": "",
+  "node-sass": ""
  },
  "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1"
