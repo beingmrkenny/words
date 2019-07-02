@@ -98,6 +98,11 @@ function wordTagHelper ($tags, $words, $insert) {
 
 	foreach ($tags as $tag) {
 		$tag = trim($tag);
+
+		if ($insert && !tagExists($tag)) {
+			addTag($tag);
+		}
+
 		foreach ($words as $word) {
 			$word = trim($word);
 			$tag = escape($tag);

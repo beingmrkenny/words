@@ -1,5 +1,43 @@
 class WordList {
 
+	static create (tag) {
+
+		let wordList = getTemplate('WordList'),
+			wordListUl = wordList.querySelector('ul'),
+			h2 = wordList.querySelector('h2'),
+			main = document.querySelector('main');
+
+		if (tag.tag === null) {
+			wordList.dataset.tag = 'INBOX';
+			h2.textContent = 'INBOX';
+		} else {
+			wordList.dataset.tag = tag.tag;
+			h2.textContent = tag.tag.toLowerCase();
+			h2.addEventListener('click', function () {
+				System.openToolbar(this.parentNode);
+			});
+		}
+
+		for (let button of qq('button', wordList)) {
+			button.addEventListener('click', System.buttonClickHandler);
+		}
+
+		if (tag.words) {
+			tag.words = shuffle(tag.words);
+			for (let word of tag.words) {
+				wordListUl.appendChild(Word.create(word));
+			}
+		}
+
+		if (tag.tag === null && main.firstElementChild) {
+			main.insertBefore(wordList, main.firstElementChild);
+		} else {
+			main.appendChild(wordList);
+		}
+
+		return wordList;
+	}
+
 	static displayWords (words) {
 
 		words.sort((a, b) => {
@@ -11,41 +49,9 @@ class WordList {
 			return (a == b) ? 0 : (a > b) ? 1 : -1;
 		});
 
-		let main = document.querySelector('main');
-
 		for (let tag of words) {
 
-			let wordList = getTemplate('WordList'),
-				wordListUl = wordList.querySelector('ul'),
-				h2 = wordList.querySelector('h2');
-
-			if (tag.tag === null) {
-				wordList.dataset.tag = 'INBOX';
-				h2.textContent = 'INBOX';
-			} else {
-				wordList.dataset.tag = tag.tag;
-				h2.textContent = tag.tag.toLowerCase();
-				h2.addEventListener('click', function () {
-					System.openToolbar(this.parentNode);
-				});
-			}
-
-			for (let button of qq('button', wordList)) {
-				button.addEventListener('click', System.buttonClickHandler);
-			}
-
-			if (tag.words) {
-				tag.words = shuffle(tag.words);
-				for (let word of tag.words) {
-					wordListUl.appendChild(Word.create(word));
-				}
-			}
-
-			if (tag.tag === null && main.firstElementChild) {
-				main.insertBefore(wordList, main.firstElementChild);
-			} else {
-				main.appendChild(wordList);
-			}
+			WordList.create(tag);
 
 		}
 

@@ -111,16 +111,17 @@ class Word {
 				let inbox = q('ul', System.getInbox());
 
 				for (let word in data) {
-
 					for (let tag of data[word].add) {
 						let wordList = q(`word-list[data-tag="${tag}"]`);
+						if (!wordList) {
+							wordList = WordList.create({ tag: tag });
+						}
 						let found = q(`[data-word="${word}"]`, wordList);
 						if (!found) {
 							q('ul', wordList).appendChild(Word.create({word:word}));
 						}
 						removeElements(qq(`[data-word="${word}"]`, inbox));
 					}
-
 					for (let tag of data[word].remove) {
 						let isFave = '0';
 						for (let wordElement of qq(`[data-word="${word}"]`, q(`word-list[data-tag="${tag}"]`))) {
@@ -133,7 +134,6 @@ class Word {
 							inbox.appendChild(Word.create({ word: word, fave : isFave }));
 						}
 					}
-
 				}
 
 				for (let list of qq('word-list')) {

@@ -57,3 +57,9 @@ function wordsAreMostlyFaved ($words) {
 	$proportion = intval($db->get_var("SELECT COUNT(*) FROM words WHERE word IN ($wordsString) AND fave = 1")) / count($words);
 	return ($proportion >= .5);
 }
+
+function tagExists ($tag) {
+	global $db;
+	$tag = escape($tag);
+	return ($db->get_var("SELECT tag FROM tags WHERE tag = '$tag'")) ? true : false;
+}
