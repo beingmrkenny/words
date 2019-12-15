@@ -3,6 +3,9 @@ class Dialog {
 	constructor () {
 		this.dialog = getTemplate('DialogTemplate');
 		document.body.appendChild(this.dialog);
+		if (typeof dialogPolyfill != 'undefined') {
+			dialogPolyfill.registerDialog(this.dialog);
+		}
 		this.dialog.showModal();
 	}
 
