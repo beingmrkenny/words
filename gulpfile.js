@@ -1,8 +1,7 @@
 const { src, dest, series, parallel, watch } = require('gulp');
+const fs = require('fs-extra');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
-const fs = require('fs-extra');
-
 
 function compileCSS () {
 

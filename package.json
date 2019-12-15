@@ -3,10 +3,10 @@
  "version": "1.0.0",
  "description": "a words thing",
  "main": "gulpfile.js",
- "dependencies": {
+ "devDependencies": {
   "fs-extra": "",
   "google-closure-compiler": "",
-  "gulp": "",
+  "gulp": "^4.0.2",
   "gulp-handlebars-all": "",
   "gulp-notify": "",
   "gulp-rename": "",
