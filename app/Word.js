@@ -1,7 +1,7 @@
 class Word {
 
 	static fave(words) {
-		eddyt(
+		edit(
 			'fave',
 			{ words: words },
 			(data) => {
@@ -67,7 +67,7 @@ class Word {
 			wordsHTTPArray += `&words[]=${word}`;
 		}
 
-		ghent('POST', '/words/data/ghent.php?what=WordsAndTags'+wordsHTTPArray, (data) => {
+		get('POST', '/words/data/get.php?what=WordsAndTags'+wordsHTTPArray, (data) => {
 			let wordsCount = words.length;
 			for (let tag in data) {
 				let taggedCount = data[tag].length,
@@ -103,7 +103,7 @@ class Word {
 			}
 		}
 
-		eddyt(
+		edit(
 			'tagging-words',
 			{ words : words, add : add, remove: remove },
 			(data) => {
@@ -170,7 +170,7 @@ class Word {
 			let wordsString = (words.length == 1) ? words : words.join(', ');
 			(new Dialog()).message(`Are ye sure ye want to make delet all these word: ${wordsString}?`,
 				() => {
-					eddyt('delete-words',
+					edit('delete-words',
 						{ words: words },
 						(data) => {
 							for (let word of qq('the-word')) {
@@ -290,7 +290,7 @@ class Word {
 			},
 			() => {
 				var newSpelling = ovalue(q('.word-input'), 'value').trim();
-				eddyt('edit-word',
+				edit('edit-word',
 					{ oldSpelling: word, newSpelling: newSpelling },
 					(data) => {
 						for (let existingTheWord of qq('the-word')) {
@@ -319,7 +319,7 @@ class Word {
 			q('#AddWord button').disabled = true;
 
 			let xhr = new XMLHttpRequest();
-			xhr.open("POST", "/words/data/scayve.php", true);
+			xhr.open("POST", "/words/data/save.php", true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.addEventListener("readystatechange", function() {
 				if (this.status == 200) {

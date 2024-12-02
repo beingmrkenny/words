@@ -1,4 +1,4 @@
-function eddyt (action, ...args) {
+function edit (action, ...args) {
 
 	var success, fail, data, url = `action=${action}`, words = [];
 
@@ -30,7 +30,7 @@ function eddyt (action, ...args) {
 	}
 
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "/words/data/eddyt.php", true);
+	xhr.open("POST", "/words/data/edit.php", true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.addEventListener("readystatechange", function() {
 		if (this.status == 200) {
@@ -48,7 +48,7 @@ function eddyt (action, ...args) {
 
 }
 
-function ghent (method, url, success) {
+function get (method, url, success) {
 	var xhr = new XMLHttpRequest();
 	xhr.open(method, url, true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

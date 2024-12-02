@@ -10,7 +10,7 @@ xhr.addEventListener('load', function () {
 xhr.addEventListener("error", function () {
 	console.log('XHR done fucked up');
 });
-xhr.open("GET", "/words/data/ghent.php");
+xhr.open("GET", "/words/data/get.php");
 xhr.send();
 
 q('#AddWord button').addEventListener ('click', Word.save);

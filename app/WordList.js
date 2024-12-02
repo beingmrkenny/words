@@ -183,7 +183,7 @@ class WordList {
 			},
 			() => {
 				var newTag = ovalue(q('.tag-input'), 'value').trim();
-				eddyt('edit-tag',
+				edit('edit-tag',
 					{ tag: tag, newTag: newTag },
 					(data) => {
 						list.querySelector('h2').textContent = data.newTag;
@@ -200,7 +200,7 @@ class WordList {
 	static destroy (tag) {
 		(new Dialog()).message(`Are ye sure ye want to make delet of the tag of “${tag}”? Only the tag shall be made delet: its words shall be made to remain.`,
 			() => {
-				eddyt('delete-tag',
+				edit('delete-tag',
 					{ tag: tag },
 					(data) => {
 						for (let wordList of qq('word-list')) {
