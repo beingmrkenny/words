@@ -1,21 +1,10 @@
-serve/
-
+# files
 *.db
 *.scpt
 *.map
 
 # compiled output
-/dist
-/tmp
-/out-tsc
-/serve
+serve/
 
-# misc
-/.sass-cache
-package-lock.json
-
-# System Files
-.DS_Store
-Thumbs.db
-
+# dependencies
 node_modules/
