@@ -12,8 +12,8 @@ exports.serveDirectory = () => {
 	var filesToDelet = [
 		"readCSV.php",
 		"readJSON.php",
-		"db/cret.sql",
-		"db/delet.sql",
+		"db/create.sql",
+		"db/delete.sql",
 		"db/fill.sql",
 		"db/setup.sh",
 	];

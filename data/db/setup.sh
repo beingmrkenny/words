@@ -4,7 +4,7 @@ fi;
 
 touch words.db;
 
-sqlite3 words.db < cret.sql;
+sqlite3 words.db < create.sql;
 
 cd ../;
 
