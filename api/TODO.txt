@@ -17,32 +17,36 @@ tags
 	detag word
 
 
-GET /words/api/get
+GET /words/api/data
 	echo { }
 
-POST /words/api/add
+PUT /words/api/word
+PUT /words/api/tag
+	new:
 	{
 		words : [ "" ],
 		tags : [ "" ]
 	}
-
-POST /words/api/edit
+	edit:
 	{
-		words : [ { existing : new } ],
-		tags : [ { existing : new } ]
+		words : [
+			{
+				existingword : {
+					spelling: <string>,
+					favourite: <bool>,
+					tags : [ ],
+					detags : [ ]
+				}
+			}
+		],
+		tags : [ { existing : <string> } ]
 	}
 
-POST /words/api/fave
-	[ "" ]
-
-POST /words/api/delete
+DELETE /words/api/word
+DELETE /words/api/tag
 	{
-		words : [],
+		words : []
+	}
+	{
 		tags: []
 	}
-
-POST /words/api/tag
-	[ { word: tag } ]
-
-POST /words/api/detag
-	[ { word: tag } ]
