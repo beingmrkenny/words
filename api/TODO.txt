@@ -1,0 +1,48 @@
+get
+	everything
+
+words
+	add
+	edit spelling
+	delete
+	favourite
+	add tag
+	remove tag
+
+tags
+	add
+	edit spelling
+	delete
+	tag word
+	detag word
+
+
+GET /words/api/get
+	echo { }
+
+POST /words/api/add
+	{
+		words : [ "" ],
+		tags : [ "" ]
+	}
+
+POST /words/api/edit
+	{
+		words : { existing : new },
+		tags : { existing : new }
+	}
+
+POST /words/api/fave
+	[ "" ]
+
+POST /words/api/delete
+	{
+		words : [],
+		tags: []
+	}
+
+POST /words/api/tag
+	[ { word: tag } ]
+
+POST /words/api/detag
+	[ { word: tag } ]
