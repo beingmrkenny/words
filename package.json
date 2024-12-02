@@ -1,32 +1,29 @@
 {
- "name": "words",
- "version": "1.0.0",
- "description": "a words thing",
- "main": "gulpfile.js",
- "devDependencies": {
-  "fs-extra": "",
-  "google-closure-compiler": "",
-  "gulp": "^4.0.2",
-  "gulp-handlebars-all": "",
-  "gulp-notify": "",
-  "gulp-rename": "",
-  "gulp-sass": "",
-  "gulp-shell": "",
-  "gulp-sourcemaps": "",
-  "node-notify": "",
-  "node-sass": ""
- },
- "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1"
- },
- "repository": {
-  "type": "git",
-  "url": "git+https://github.com/beingmrkenny/wirts.git"
- },
- "author": "Mark Kenny",
- "license": "MIT",
- "bugs": {
-  "url": "https://github.com/beingmrkenny/wirts/issues"
- },
- "homepage": "https://github.com/beingmrkenny/wirts#readme"
+	"name": "words",
+	"version": "1.0.0",
+	"description": "a words thing",
+	"main": "gulpfile.js",
+	"devDependencies": {
+		"fs-extra": "",
+		"google-closure-compiler": ""
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"css": "mkdir -p serve && sass sass/main.scss serve/words.css",
+		"js": "mkdir -p serve && node build/compile.js",
+		"html": "mkdir -p serve && cp app/index.html serve/index.html && sed -i '' -e \"s/?refresh=today/?refresh=$(echo $RANDOM | md5)/g\" serve/index.html;",
+		"applescript": "node build/applescript.js",
+		"serve": "node build/serve.js",
+		"release": "node build/release.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/beingmrkenny/wirts.git"
+	},
+	"author": "Mark Kenny",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/beingmrkenny/wirts/issues"
+	},
+	"homepage": "https://github.com/beingmrkenny/wirts#readme"
 }

@@ -3,7 +3,8 @@ A little web app to keep track of your favourite words
 
 ## no one but me will ever run this app but in case you do
 
-This is all done in gulp, so install that. Then read the gulpfile to find out about all of the things
+1. `npm i -g sass`
+2. `npm i`
 
 ## Setting up the database
 
