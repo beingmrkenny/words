@@ -3,7 +3,7 @@ A little web app to keep track of your favourite words
 
 ## no one but me will ever run this app but in case you do
 
-1. `npm i -g sass`
+1. `npm i -g sass google-closure-compiler` (you may need to install java: homebrew can do it)
 2. `npm i`
 
 ## Setting up the database

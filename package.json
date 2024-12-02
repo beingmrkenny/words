@@ -4,8 +4,7 @@
 	"description": "a words thing",
 	"main": "gulpfile.js",
 	"devDependencies": {
-		"fs-extra": "",
-		"google-closure-compiler": ""
+		"fs-extra": ""
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
