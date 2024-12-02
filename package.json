@@ -9,12 +9,11 @@
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"css": "mkdir -p serve && sass sass/main.scss serve/words.css",
+		"css": "mkdir -p serve && sass scss/main.scss serve/words.css",
 		"js": "mkdir -p serve && node build/compile.js",
 		"html": "mkdir -p serve && cp app/index.html serve/index.html && sed -i '' -e \"s/?refresh=today/?refresh=$(echo $RANDOM | md5)/g\" serve/index.html;",
 		"applescript": "node build/applescript.js",
-		"serve": "node build/serve.js",
-		"release": "node build/release.js"
+		"serve": "node build/serve.js"
 	},
 	"repository": {
 		"type": "git",
