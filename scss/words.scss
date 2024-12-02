@@ -1,3 +1,5 @@
+@use "colors";
+
 main {
 	display: flex;
 	flex-flow: row nowrap;
@@ -48,7 +50,7 @@ word-list {
 		line-height: 1.6em;
 
 		&[data-fave="1"] {
-			color: $yellow;
+			color: colors.$yellow;
 			the-word::before {
 				margin-right: 5px;
 
@@ -95,7 +97,7 @@ word-list {
 }
 
 a-word {
-	color: $light;
+	color: colors.$light;
 }
 
 the-word {
@@ -107,16 +109,16 @@ the-word {
 	&.new {
 		padding: 2px 5px 1px;
 
-		color: $dark;
-		background: $yellow;
+		color: colors.$dark;
+		background: colors.$yellow;
 		border-radius: 3px;
 	}
 
 	&.deja-la {
 		padding: 2px 5px 1px;
 
-		color: $light;
-		background: $red;
+		color: colors.$light;
+		background: colors.$red;
 		border-radius: 3px;
 	}
 }
@@ -174,8 +176,8 @@ the-word {
 
 	padding: 2px;
 
-	color: $light;
-	background: $dark;
+	color: colors.$light;
+	background: colors.$dark;
 
 	text-align: center;
 }

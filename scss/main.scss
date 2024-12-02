@@ -1,7 +1,5 @@
-$yellow: #dcb40a;
-$red: #b40e0e;
-$light: #cacaca;
-$dark: #252525;
+@use "sass:meta";
+@use "colors";
 
 html,
 body {
@@ -11,8 +9,8 @@ body {
 	margin: 0;
 	padding: 0;
 
-	color: $light;
-	background: $dark;
+	color: colors.$light;
+	background: colors.$dark;
 
 	font-family: Helvetica, sans-serif;
 }
@@ -53,9 +51,9 @@ button {
 	padding: 5px 8px;
 	box-sizing: content-box;
 
-	color: $light;
+	color: colors.$light;
 	background: rgba(0, 0, 0, 0.26);
-	border: 1px solid rgba($light, 0.1);
+	border: 1px solid rgba(colors.$light, 0.1);
 	border-radius: 3px;
 
 	line-height: 20px;
@@ -79,8 +77,8 @@ deja-la {
 	span {
 		padding: 2px 5px 1px;
 
-		color: $light;
-		background: $red;
+		color: colors.$light;
+		background: colors.$red;
 		border-radius: 3px;
 	}
 }
@@ -94,16 +92,16 @@ dialog {
 	max-width: 80vw;
 	max-width: 330px;
 
-	color: $yellow;
+	color: colors.$yellow;
 	background: rgba(0, 0, 0, 0.8);
 	border: 0;
 	border-radius: 2px;
-	box-shadow: 0 0 10px $yellow;
+	box-shadow: 0 0 10px colors.$yellow;
 
 	transform: translate(0, -50%);
 
 	&::backdrop {
-		background: rgba($yellow, 0.28);
+		background: rgba(colors.$yellow, 0.28);
 	}
 
 	h3 {
@@ -121,8 +119,8 @@ dialog {
 		padding: 12px 4px;
 		box-sizing: border-box;
 
-		color: $light;
-		background: rgba($dark, 0.5);
+		color: colors.$light;
+		background: rgba(colors.$dark, 0.5);
 
 		transition: box-shadow 1s;
 
@@ -135,7 +133,7 @@ dialog {
 
 		&:focus {
 			outline: 0;
-			box-shadow: 0 0 10px $light;
+			box-shadow: 0 0 10px colors.$light;
 		}
 	}
 
@@ -148,22 +146,22 @@ dialog {
 #Cancel {
 	width: 60px;
 
-	color: $dark;
+	color: colors.$dark;
 	border: 0;
 	border-radius: 5px;
 }
 
 #OK {
-	background: $yellow;
+	background: colors.$yellow;
 }
 
 #Cancel {
-	background: $light;
+	background: colors.$light;
 }
 
 .display-none {
 	display: none;
 }
 
-@import "header";
-@import "words";
+@include meta.load-css("header");
+@include meta.load-css("words");
