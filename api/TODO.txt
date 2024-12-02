@@ -28,8 +28,8 @@ POST /words/api/add
 
 POST /words/api/edit
 	{
-		words : { existing : new },
-		tags : { existing : new }
+		words : [ { existing : new } ],
+		tags : [ { existing : new } ]
 	}
 
 POST /words/api/fave
