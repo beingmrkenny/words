@@ -22,6 +22,8 @@ create table word2tag (
     foreign key(tag) references tags(tag) on delete cascade on update cascade
 );
 
+-- What does jealousy mean??
+
 -- if new.tag is jealous, clear all tags for this word
 -- NB jealous tags always overwrite all other tags
 -- create trigger jealousTagsClear
